@@ -1,0 +1,35 @@
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+group = "edu.harvard.chs"
+version = "1.0.0"
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://beta.hpcc.uh.edu/nexus/content/repositories/releases"
+    }
+}
+
+dependencies {
+    groovy group: 'edu.harvard.chs', name: 'cite', version: '0.9.19'
+    compile group: 'commons-io', name: 'commons-io', version: '1.4'
+    compile group: 'log4j', name: 'log4j', version: '1.2.15', ext: 'jar'
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.0.0-rc-3'
+    compile group:'postgresql', name: 'postgresql', version: '8.1-408.jdbc3'
+            
+}
+
+httpPort = 8989
+stopPort = 9451
+stopKey = 'foo'
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: nexusRepo) {                   
+            authentication (userName: nexusUser, password: nexusPassword)
+        }
+    }
+}

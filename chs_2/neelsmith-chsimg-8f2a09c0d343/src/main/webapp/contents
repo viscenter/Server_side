@@ -1,0 +1,83 @@
+import groovy.sql.Sql
+
+def confDir = context.getRealPath("/configs")
+String confFile = "citeconfig.xml"
+
+String userConfig = request.getParameter("config")
+try {
+    File f = new File("${confDir}/${userConfig}")
+    System.err.println "userConfig is ${userConfig} and f is ${f}"
+    if (f.exists()) {confFile = userConfig }
+} catch (Exception e) {
+    System.err.println "Caught exception: sticking with ${confFile}"
+    // just stick with default
+}
+
+def collections = []
+def confXml = new XmlSlurper().parse(new File(confDir + "/${confFile}"))
+
+confXml.contents.include.each {
+	      collections.add(it."@label".toString())
+}
+
+
+def dbUrl = confXml.jdbcConfig."@dburl".toString()
+def dbUser = confXml.jdbcConfig."@user".toString()
+def dbPass = confXml.jdbcConfig."@password".toString()
+def dbDriver = confXml.jdbcConfig."@driver".toString()
+Sql sql = Sql.newInstance(dbUrl,dbUser,dbPass,dbDriver)
+
+
+html.html {
+    head {
+        meta(charset : "UTF-8")
+        title("Contents: CHS Image Service")
+        link(type: "text/css", rel : "stylesheet",  
+             href : "css/massive.css", title: "concat of 3 HMT doc style sheets")
+    }
+
+    body {
+
+        header (role: "banner") {
+            mkp.yield("CHS Image Extension")
+            nav (role: "navigation") {
+                mkp.yield("chsimg: ")
+                a(href: "home", "home")
+                mkp.yield (" | " )
+                a(href: "about", "about")
+                mkp.yield (" | " )
+                a(href: "requests", "requests")
+            }
+        }
+        article (role : "main") {
+
+            h1 ("Contents of  this image service")
+
+            table {
+                tr {
+                    th ("Image collection")
+                    th("Size")
+                }
+                sql.eachRow("select * from img_group order by description", 
+                            {
+                                def rowRes = it.toRowResult()
+				def currentLabel = rowRes.getProperty('label')
+				if (currentLabel in collections) {
+                                tr {
+                                    td( "${rowRes.getProperty('description')}")
+                                    def cnt = sql.firstRow("select count(*) from img where group_id = ?",[rowRes.getProperty('id')])
+                                    td("${cnt.getProperty('count')} images")
+                                    
+                                }
+}
+                            }
+                            )
+              
+           }
+    }
+}
+} // html
+
+
+
+

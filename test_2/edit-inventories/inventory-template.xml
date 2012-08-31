@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="TextInventory.rng" type="xml"?>
+<TextInventory
+    tiversion="3.0.rc1"
+    xmlns="http://chs.harvard.edu/xmlns/cts3/ti">
+    <collection
+        id="demo">
+        <title
+            xml:lang="eng"
+            xmlns="http://purl.org/dc/elements/1.1">TextInventory template</title>
+        <creator
+            xmlns="http://purl.org/dc/elements/1.1">Neel Smith</creator>
+        <coverage
+            xml:lang="eng"
+            xmlns="http://purl.org/dc/elements/1.1">No real content</coverage>
+        <description
+            xml:lang="eng"
+            xmlns="http://purl.org/dc/elements/1.1">A small template file that can be easily cloned
+            for editing a new TextInventory. This template illustrates how to catalog a valid source
+            document expressed in namespaced XML. </description>
+        <rights
+            xml:lang="eng"
+            xmlns="http://purl.org/dc/elements/1.1">This TextInventory template is placed in the
+            public domain</rights>
+    </collection>
+    <textgroup
+        projid="groupidentifier">
+        <groupname
+            xml:lang="eng">Name of text group goes here</groupname>
+        <work
+            projid="workidentifier"
+            xml:lang="eng">
+            <title
+                xml:lang="eng">Title of a work goes here</title>
+            <edition
+                projid="none">
+                <label
+                    xml:lang="eng">Label for specific edition goes here</label>
+                <online
+                    docname="sourcedocument.xml">
+                    <validate
+                        schema="documentschema.rng"/>
+                    <namespaceMapping
+                        abbreviation="docNs"
+                        nsURI="http://some.uri.com/namespaceId"/>
+                    <citationMapping>
+                        <citation
+                            label="chapter"
+                            xpath="/docNs:div[@n = '?']"
+                            scope="/docNs:textbody">
+                            <citation
+                                label="section"
+                                xpath="/docNs:para[@n = '?']"
+                                scope="/docNs:textbody/docNs:div[@n = '?']"/>
+                        </citation>
+                    </citationMapping>
+                </online>
+            </edition>
+        </work>
+    </textgroup>
+</TextInventory>

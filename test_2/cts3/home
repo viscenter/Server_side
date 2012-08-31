@@ -1,0 +1,74 @@
+import edu.harvard.chs.cts3.LibraryInfo
+
+
+def libraryInfo = new LibraryInfo()
+def ftrString = "Built with the cts3 library, version ${libraryInfo.getLibraryVersion()}, packaged on ${libraryInfo.getLibraryDate()}"
+
+
+def installType = "APPENGINE"
+html.html {
+    head {
+        title("CTS3")
+        link(type: "text/css", rel : "stylesheet",  
+             href : "normalize.css", title: "CTS style sheet")
+        link(type: "text/css", rel : "stylesheet",  
+             href : "app.css", title: "CTS style sheet")
+    }
+
+    body {
+        header("Center for Hellenic Studies: Canonical Text Services")
+        
+        nav {
+            p { 
+                mkp.yld("CTS: ")
+                a(href : "credits", "credits")
+            }
+        }
+
+        article {
+            h1 ("Canonical Text Services")
+
+            p("""Although CTS is primarily intended to provide texts to
+          other computer programs, you can browse the texts
+          in this service from the link(s) below.""")   
+            if (installType == "RDBMS") {
+                p("Browse texts from the inventory configured in:")
+                def pathStr = request.getRealPath('configs')
+                def uploadDir = new File(pathStr)
+                ul {
+                    uploadDir.listFiles([accept : {d,f -> f ==~ /.*\.xml/}] as FilenameFilter).toList().each { confFile ->
+                        li {
+                            a(href : "CTS?request=GetCapabilities&withXSLT=chs-gc&inv=${confFile.name}", "${confFile.name}")   		    }
+                    }
+                }
+
+	    
+            } else {
+                p("Browse texts from the inventory:")
+                def pathStr = request.getRealPath('inventories')
+                def uploadDir = new File(pathStr)
+                ul {
+                    uploadDir.listFiles([accept : {d,f -> f ==~ /.*\.xml/}] as FilenameFilter).toList().each { invFile ->
+                        li {
+                            a(href : "CTS?request=GetCapabilities&withXSLT=chs-gc&inv=${invFile.name}", "${invFile.name}")   
+                        }
+                    }
+                }
+            }
+
+
+            p {
+                a(class: "admin", href:"dbadmin/admin", "Edit the datastore (requires authorization)")
+            }
+	}
+        footer (class : "footer", "${ftrString}")
+    }
+}
+
+
+
+
+
+
+
+

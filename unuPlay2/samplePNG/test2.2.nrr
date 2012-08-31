@@ -1,0 +1,8 @@
+NRRD0001
+type: unsigned short
+dimension: 3
+sizes: 7216 5412 2
+spacings: 1 1 1
+endian: big
+encoding: raw
+data file: ./Chad010_002.png

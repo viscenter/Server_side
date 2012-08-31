@@ -1,0 +1,27 @@
+
+import groovy.xml.MarkupBuilder
+
+
+html.html {
+    head {
+        title ("Sorry")
+        link(type: "text/css", rel : "stylesheet",  href : "../admin.css", title: "admin style sheet")
+    }
+
+    body {
+        p {
+            a(href : "../home", "CTS home")
+        }
+
+        p {
+            a(href : "admin", "Service administration")
+        }
+
+        h1("Sorry")
+	p ("Configuration files are not accessible through the servlet.")
+	p ("""Instead, please edit them off line, then install them in the
+proper location. (See the CTS documentation for more details.)""")
+    }
+}
+
+

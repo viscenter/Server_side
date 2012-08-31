@@ -1,0 +1,79 @@
+
+/*
+Cheap login for access to admin of locally running system using RDBMS as JPA source.
+Check if already authenticated.
+*/
+
+
+import com.google.appengine.api.users.User
+import com.google.appengine.api.users.UserService
+import com.google.appengine.api.users.UserServiceFactory
+import cite.AuthChecker
+
+def installType = "APPENGINE"
+
+if (!session) {
+    session = request.getSession(true)
+    session.user = ""
+}
+
+
+def uname = request.getParameter("user")
+if ((uname == null) || (uname == "")){
+}  else {
+    session.user = uname
+}
+
+def passFile = request.getRealPath('configs') + "/pass.xml"
+AuthChecker auth = new AuthChecker(passFile)
+boolean ok = auth.authOk(session?.user)
+
+
+html.html {
+    head {
+        title ("Login")
+        link(type: "text/css", rel : "stylesheet",  href : "../admin.css", title: "admin style sheet")
+    }
+    body {
+
+    if ((ok) && (installType == "RDBMS")) {
+            p(class:"login") {
+                a (href : "logout", "Logout")
+            }
+        }
+
+        p {
+            a(href : "../home", "CTS home")
+        }
+
+        if  (ok) {
+                h1("User ${session.user}")
+                p ("Successfully logged in. See ") {
+                    a (href : "admin", "administration options")
+                }
+
+
+        } else {
+            h1 ("Login")
+            if (session.user) {
+                p("${session.user} is not an authorized user name.")
+	    }
+
+            p("Login to use the service adminstration pages")
+            form (method : 'POST', action : 'login') {
+                p "User name"
+                input (name : "user")
+
+               /*
+                p ("Password") 
+                input (type : "password", name : "password") */
+                input (type:"submit", value : "Log in")
+            }
+        }
+    }
+}
+
+
+
+
+

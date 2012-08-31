@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI
+    xmlns="http://www.tei-c.org/ns/1.0"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    >
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title
+                    xml:lang="eng">Sonnet 35</title>
+                <author>Shakespeare</author>
+            </titleStmt>
+            <publicationStmt>
+                <p>Publication information</p>
+            </publicationStmt>
+            <sourceDesc>
+                <p>Edition of 1609 transcribed at
+                http://www.shakespeares-sonnets.com/sonn01.htm.</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <div
+                n="35"
+                type="sonnet">
+                <l n="1">No more be grieved at that which thou hast done:</l>
+                <l n="2">Roses have thorns, and silver fountains mud:</l>
+                <l n="3">Clouds and eclipses stain both moon and sun,</l>
+                <l n="4">And loathsome canker lives in sweetest bud.</l>
+                <l n="5">All men make faults, and even I in this,</l>
+                <l n="6">Authorizing thy trespass with compare,</l>
+                <l n="7">Myself corrupting, salving thy amiss,</l>
+                <l n="8">Excusing thy sins more than thy sins are;</l>
+                <l n="9">For to thy sensual fault I bring in sense,</l>
+                <l n="10">Thy adverse party is thy advocate,</l>
+                <l n="11">And 'gainst myself a lawful plea commence:</l>
+                <l n="12">Such civil war is in my love and hate,</l>
+                <l n="13">That I an accessary needs must be,</l>
+                <l n="14">To that sweet thief which sourly robs from me.</l>
+            </div>
+        </body>
+    </text>
+</TEI>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+    xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">
+    <start>
+        <element
+            name="citeconfig">
+            <element
+                name="inventory">
+                <choice>
+                    <attribute
+                    name="url"/>
+                    <attribute name="file"/>
+                </choice>
+            </element>
+            <element
+                name="jdbcConfig">
+                <attribute
+                    name="dburl"/>
+                <attribute
+                    name="driver"/>
+                <attribute
+                    name="user"/>
+                <attribute
+                    name="password"/>
+            </element>
+        </element>
+    </start>
+</grammar>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="citeconfig.rng" type="xml"?>
+
+<citeconfig>
+    <jdbcConfig dburl="jdbc:postgresql://localhost/img2" 
+		driver="org.postgresql.Driver" 
+		user="nsmith" 
+		password=""/>
+    <iipimage url="http://amphoreus.hpcc.uh.edu/fcgi-bin/iipsrv.fcgi"/>
+    <defaults width="800" ns="hmt" collection="chsimg"/>
+</citeconfig>

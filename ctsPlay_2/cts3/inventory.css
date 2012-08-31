@@ -1,0 +1,17 @@
+/*
+  CTS elements for display of transformed TextInventories.
+ */
+.metadata {
+    color : gray;
+    background-color:inherit;
+    padding-left: 1em;
+}
+em.title {
+    font-style : italic;
+}
+strong {
+    font-weight:bold;
+}
+li {
+margin-bottom : 1em;
+}

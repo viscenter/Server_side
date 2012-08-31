@@ -1,0 +1,9 @@
+
+/*
+Check if already authenticated?
+*/
+
+if (session) {
+    session.user = null
+}
+response.sendRedirect("../home")

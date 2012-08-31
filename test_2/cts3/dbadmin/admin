@@ -1,0 +1,142 @@
+/*
+Authenticate using session object for local install, Google mechanism for AE.
+If user not authenticated, redirect to login.
+*/
+
+import com.google.appengine.api.users.User
+import com.google.appengine.api.users.UserService
+import com.google.appengine.api.users.UserServiceFactory
+
+import cite.AuthChecker
+
+boolean debug = false
+
+def passFile = request.getRealPath('configs') + "/pass.xml"
+AuthChecker auth = new AuthChecker(passFile)
+boolean ok = auth.authOk(session?.user)
+
+
+def installType = "APPENGINE"
+def uname = "" 
+/* session.user or user.getNickname() for auth app*/
+
+if (!ok) {
+    if (installType == "RDBMS") {
+        response.sendRedirect("login")
+
+    } else if (installType == "APPENGINE") {
+        UserService userService = UserServiceFactory.getUserService()
+        response.sendRedirect(userService.createLoginURL(request.getRequestURI()))
+    } else {
+        html.html {
+            head{title("Death") } 
+            body {p("Unknown install type ${installType}")}
+        }
+    }
+
+
+
+} else {
+
+    html.html {
+        head {
+            title("Service administration")
+            link(type: "text/css", rel : "stylesheet",  href : "../admin.css", title: "admin style sheet")	
+        }
+        body {
+            if (installType == "RDBMS") {
+                p(class:"login") {
+                    a (href : "logout", "Logout")
+                }
+            }
+
+
+            p {
+                a(href : "../home", "CTS home")
+            }
+
+	        div (class : "alpheios-enabled-text", lang: "grc") {  }
+
+            h1 ("Service administration")
+
+            div {
+                h2 ("Upload data")
+        
+                p """To upload data from a tabular file, place a tabular
+file in the servlet's "uploads" directory, and refresh this page."""
+
+                def pathStr = request.getRealPath('uploads')
+                p "Files available for upload:"
+                def servletDir = new File(pathStr)
+                ul {
+                    // add check that file list is not null!
+                    servletDir.listFiles([accept : {d,f -> f ==~ /.*\.txt/}] as FilenameFilter)?.toList().each { txtFile ->
+                        li {
+                            a (href : "upload?file=${txtFile}", "Upload ${txtFile}")
+                        }
+                    }
+                }
+                /*
+                p """Alternatively, enter a URL of a tabular file.
+                (Not currently supported when running CTS on AppEngine.)"""
+                
+                form(action : "upload", method : "get") {
+                    input (name:"url", value : "http://shot.holycross.edu/sample-tab-hh1.txt", class : "wide")
+                    input (type:"submit", value : "Load URL")
+
+                }
+                */
+            }
+
+            div {
+                h2 ("Delete data")
+
+
+                ul {
+                    li { p("""Delete node[s] by urn. (Careful:
+
+will delete all nodes within the scope of the given URN. Test 
+by searching for the same URN if you're unsure.) """)
+                        form(action : "delete", method : "get") {
+                            input (name:"urn",  class : "wide")
+                            input (type:"submit", value : "Delete")
+                        }
+                    }
+
+                    li {
+                        a(href : "delete", "Delete all CTS nodes")
+                    }
+                }
+            }
+
+            
+            div {
+                h2 ("Search data")
+                ul {
+                    li {
+p ("Submit interactive queries from a form:") {
+a (href : 'livequery', "here") 
+}
+}
+                    li {
+                        p ("Search for node[s] with urn matching:")
+                        form(action : "search", method : "get") {
+                            input (name:"urn",  class : "wide")
+                            input (type:"submit", value : "Search")
+                        }
+                    }
+                }
+            }
+
+            if (debug) {
+                div {
+                    h2 ("List all nodes")
+                    p {
+                        a (href:"list","List all (debugging only)")
+                    }		
+                }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,63 @@
+
+import javax.persistence.*
+
+import javax.persistence.EntityManager
+
+import edu.harvard.chs.ctsjpa.CtsNode
+import edu.harvard.chs.ctsjpa.EMF
+
+import groovy.xml.MarkupBuilder
+
+
+
+
+def installType = "APPENGINE"
+
+// field separator in tab files:
+def sep = "#"
+
+
+//EntityManagerFactory  emf = Persistence.createEntityManagerFactory("cts")
+//def em = emf.createEntityManager()
+def em = EMF.get().createEntityManager()
+
+html.html {
+    head {
+        title ("List CTS data: ${installType}")
+        link(type: "text/css", rel : "stylesheet",  href : "../admin.css", title: "admin style sheet")
+    }
+
+    body {
+        p {
+            a(href : "../home", "CTS home")
+        }
+
+        p {
+            a(href : "admin", "Service administration")
+        }
+
+        h1("List all")
+
+        String queryStr = "select from " + CtsNode.class.getName() + " cn"
+        Query query = em.createQuery(queryStr)
+        def allNodes = query.getResultList()
+
+        p ("For query ${queryStr}, found ${allNodes.size()} nodes")
+        
+        ul {
+            allNodes.each { n ->
+                li () {
+		    span(n.toString())
+		    span ("(seq ${n.sequenceNum})")
+		    span ("id: ${n.id}")
+		    mkp.yld ("refs 1-4: ${n.ref1},${n.ref2},${n.ref3},${n.ref4}")
+
+		}
+            }
+        }
+    }
+}
+
+em.close()
+
+

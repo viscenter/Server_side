@@ -1,0 +1,49 @@
+<project name="common" default="usage">
+
+  <!-- ******* CONFIGURABLE PROPERTIES *********************** -->
+  <property file="local.properties"/>
+
+  <property name="src" location="src"/>
+  <property name="corelib" location="lib"/>
+
+  <path id="groovy.classpath"> 
+    <fileset dir="lib"
+	     includes="**/*.jar"/>
+
+    <fileset dir="${builddir}/lib"
+	     includes="**/*.jar"/>
+    <fileset dir="${corelib}/"
+	     includes="**/*.jar"/>
+    <pathelement location="${builddir}/classes"/>
+  </path>
+
+
+  <path id="common.classpath"> 
+    <fileset dir="${builddir}/lib"
+	     includes="**/*.jar"/>
+    <fileset dir="${corelib}/"
+	     includes="**/*.jar"/>
+    <pathelement location="${builddir}/classes"/>
+  </path>
+
+
+  <!-- ******  COMMON TARGETS FOR BUILDING MAIN LIBRARIES **************** -->
+
+  <target name="init"
+	  description="Creates necessary subdirectories of ${builddir}">
+    <mkdir  dir="${builddir}/lib"/>
+    <mkdir  dir="${builddir}/classes"/>
+  </target>
+
+
+  <target name="clean"
+	  description="Creates empty directory structure in ${builddir}"
+	  >
+    <delete dir="${builddir}"/>
+    <mkdir dir="${builddir}"/>
+    <mkdir dir="${builddir}/lib"/>
+    <mkdir dir="${builddir}/classes"/>
+  </target>
+
+
+</project>

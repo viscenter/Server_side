@@ -1,0 +1,191 @@
+/* Groovy page for deleting records identified by URN from JPA data store.
+*/
+import javax.persistence.*
+import edu.harvard.chs.cts3.CtsUrn
+import edu.harvard.chs.ctsjpa.*
+import groovy.xml.MarkupBuilder
+
+
+import com.google.appengine.api.users.User
+import com.google.appengine.api.users.UserService
+import com.google.appengine.api.users.UserServiceFactory
+import cite.AuthChecker
+
+def installType = "APPENGINE"
+
+def passFile = request.getRealPath('configs') + "/pass.xml"
+AuthChecker auth = new AuthChecker(passFile)
+boolean ok = auth.authOk(session?.user)
+
+
+if (!ok) {
+    if (installType == "RDBMS") {
+        response.sendRedirect("login")
+
+    } else if (installType == "APPENGINE") {
+        UserService userService = UserServiceFactory.getUserService()
+        response.sendRedirect(userService.createLoginURL(request.getRequestURI()))
+    } else {
+        html.html {
+            head{title("Unrecognized installation type") } 
+            body {p("Unknown install type ${installType}")}
+        }
+    }
+
+
+
+} else {
+    // user authorized to delete
+    def em = EMF.get().createEntityManager()
+
+    html.html {
+        head {
+            title ("Delete CTS data: ${installType}")
+            link(type: "text/css", rel : "stylesheet",  href : "../admin.css", title: "admin style sheet")
+        }
+
+        body {
+            if (installType == "RDBMS") {
+                p(class:"login") {
+                    a (href : "logout", "Logout")
+                }
+            }
+
+            p {
+                a(href : "../home", "CTS home")
+            }
+            p {
+                a(href : "admin", "Service administration")
+            }
+
+            h1("Delete nodes")
+            def urnStr = request.getParameter("urn")
+            def idStr = request.getParameter("id")
+            def tidy = request.getParameter("nonulls")
+
+            // FOR MULTIPLE DELETES HAVE TO HANDLE AE AND RDBMS
+            // DIFFERENTLY! 
+            // See correct example under delete all option:
+            if ((urnStr != null) && (urnStr != "")) {
+                CtsUrn urn = new CtsUrn(urnStr)
+
+                if (urn) {
+                    CtsNode ctsn = new CtsNode(urn)
+                    String queryStr = "select from " + CtsNode.class.getName() + " cn where " +  ctsn.filterExprForUrnVals("cn")
+
+                    def allNodes = em.createQuery(queryStr).getResultList()
+                    def deletedCount = 0
+
+                    if (installType == "APPENGINE") {
+                        allNodes.each { n ->
+                            em.getTransaction().begin()
+                            em.remove(n)
+                            em.getTransaction().commit()
+                            deletedCount++
+                        }
+
+                    } else {
+                        em.getTransaction().begin()
+                        allNodes.each { n ->
+                            em.remove(n)
+                            em.flush()
+                            deletedCount++
+                        }
+                        em.getTransaction().commit()
+                    }
+
+                    p ("For urn ${urn}, deleted ${deletedCount} node(s)")
+
+                } else {
+                    p ("Not a valid URN:  ${urnStr}")
+                }
+
+
+            }  else if ((tidy != null) && (tidy != "")) {
+                em.getTransaction().begin()
+                Query q = em.createQuery("SELECT FROM CtsNode cn WHERE cn.nextNode IS NULL")
+                def nullList = q.getResultList()
+                nullList.each { n ->
+                    em.remove(n)
+                    em.flush()
+                }
+                em.getTransaction().commit()
+
+
+
+            }  else if ((idStr != null) && (idStr != "")) {
+                em.getTransaction().begin()
+                CtsNode nodeToKill = em.find(CtsNode.id, Long.parseLong(idStr))
+                em.remove(nodeToKill)
+                em.getTransaction().commit()
+
+
+
+
+
+
+            } else {
+                // delete ALL nodes
+                String queryStr = "select from " + CtsNode.class.getName() + " cn"
+                def allNodes = em.createQuery(queryStr).getResultList()
+                def deletedCount = 0
+
+
+                // JDBC AND APPENGINE HANDLE TRANSACTIONS DIFFERENTLY!
+                if (installType == "APPENGINE") {
+                    allNodes.each { n ->
+                        em.getTransaction().begin()
+                        em.remove(n)
+                        em.getTransaction().commit()
+                        deletedCount++
+                    }
+
+                } else {
+                    em.getTransaction().begin()
+                    allNodes.each { n ->
+                        em.remove(n)
+                        em.flush()
+                        deletedCount++
+                    }
+                    em.getTransaction().commit()
+                }
+
+
+                // when deleting all, also delete xml namespaces:
+                String nsQuery = "select from " + CtsXmlNamespace.class.getName() + " ns"
+                def allNS = em.createQuery(nsQuery).getResultList()
+                def deletedNSCount = 0
+
+
+                // JDBC AND APPENGINE HANDLE TRANSACTIONS DIFFERENTLY!
+                if (installType == "APPENGINE") {
+                    allNS.each { ns ->
+                        em.getTransaction().begin()
+                        em.remove(ns)
+                        em.getTransaction().commit()
+                        deletedNSCount++
+                    }
+
+                } else {
+                    em.getTransaction().begin()
+                    allNS.each { ns ->
+                        em.remove(ns)
+                        em.flush()
+                        deletedNSCount++
+                    }
+                    em.getTransaction().commit()
+                }
+
+
+
+                p ("Deleted total of ${deletedCount} nodes and ${deletedNSCount} namesapces")
+            }
+
+        }
+    } // end html
+    em.close()
+}    
+
+
+
+

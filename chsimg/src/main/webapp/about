@@ -1,0 +1,52 @@
+import groovy.sql.Sql
+
+def confDir = context.getRealPath("/configs")
+def dbConfFileName = "dbconfig.xml"
+def dbConfXml = new XmlSlurper().parse(new File(confDir + "/" + dbConfFileName))
+def dbUrl = dbConfXml.jdbcConfig."@dburl".toString()
+def dbUser = dbConfXml.jdbcConfig."@user".toString()
+def dbPass = dbConfXml.jdbcConfig."@password".toString()
+def dbDriver = dbConfXml.jdbcConfig."@driver".toString()
+Sql sql = Sql.newInstance(dbUrl,dbUser,dbPass,dbDriver)
+
+
+html.html {
+    head {
+        title("Contents: CHS Image Service")
+        link(type: "text/css", rel : "stylesheet",  
+             href : "cts.css", title: "CTS style sheet")
+    }
+
+    body {
+        div (class : "menu") {
+            p { 
+                mkp.yld("Collection service: ")
+	a (href: "home", "CHS Image extension  ")
+            }
+        }
+
+
+        div (class : "cts-content"){
+            h1 ("The contents of  this image service")
+
+	ul {
+	sql.eachRow("select * from img_group", {
+	  def rowRes = it.toRowResult()
+	  li {
+	    mkp.yld( "${rowRes.getProperty('description')}: ")
+	def cnt = sql.firstRow("select count(*) from img where group_id = ?",[rowRes.getProperty('id')])
+	strong ("${cnt.getProperty('count')}")
+	mkp.yld (" images.")
+	}
+
+
+	} )
+
+        }
+    }
+}
+} // html
+
+
+
+

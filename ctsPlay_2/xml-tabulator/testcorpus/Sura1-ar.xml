@@ -1,0 +1,42 @@
+<?oxygen RNGSchema="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/teilite.rng" type="xml"?>
+<TEI
+    xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>The Quran</title>
+                <editor
+                    role="trans">Muhammad M. Pickthall</editor>
+            </titleStmt>
+            <publicationStmt>
+                <p>TEI-Lite P5 text of the first sura of the Quran</p>
+            </publicationStmt>
+            <sourceDesc>
+                <p>From the Perseus project edition of the Quran at
+                    http://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A2002.02.0006%3Asura%3D1</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <div
+                n="1" type="sura">
+                <l
+                    n="1">	بِسْمِ اللّهِ الرَّحْمَنِ الرَّحِيمِ</l>
+                <l
+                    n="2"> الْحَمْدُ للّهِ رَبِّ الْعَالَمِينَ </l>
+                <l
+                    n="3"> الرَّحْمنِ الرَّحِيمِ </l>
+                <l
+                    n="4"> مَلِكِ يَوْمِ الدِّينِ </l>
+                <l
+                    n="5"> إِيَّاكَ نَعْبُدُ وإِيَّاكَ نَسْتَعِينُ </l>
+                <l
+                    n="6">اهدِنَا الصِّرَاطَ المُستَقِيمَ</l>
+                <l
+                    n="7"> صِرَاطَ الَّذِينَ أَنعَمتَ عَلَيهِمْ غَيرِ المَغضُوبِ عَلَيهِمْ وَلاَ
+                    الضَّالِّينَ</l>
+            </div>
+        </body>
+    </text>
+</TEI>

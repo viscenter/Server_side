@@ -1,0 +1,226 @@
+<?oxygen RNGSchema="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/teilite.rng" type="xml"?>
+<TEI
+    xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title
+                    xml:lang="eng">Gospel According to John</title>
+            </titleStmt>
+            <publicationStmt>
+                <p>TEI-Lite P5 edition of John 1, derived from the Perseus Project edition of the
+                    New Testament at
+                    http://www.perseus.tufts.edu/hopper/text?doc=John+1&amp;fromdoc=Perseus%3Atext%3A1999.02.0060
+                </p>
+            </publicationStmt>
+            <sourceDesc>
+                <p>Rainbow Missions, Inc. World English Bible. Rainbow Missions, Inc.; revision of
+                    the American Standard Version of 1901. http://ebible.org/bible/web.</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <div
+                n="1"
+                type="chapter">
+                <p>
+                    <seg
+                        n="1"
+                        type="verse"> in principio erat Verbum et Verbum erat apud Deum et Deus erat
+                        Verbum </seg>
+                    <seg
+                        n="2"
+                        type="verse"> hoc erat in principio apud Deum </seg>
+                    <seg
+                        n="3"
+                        type="verse"> omnia per ipsum facta sunt et sine ipso factum est nihil quod
+                        factum est </seg>
+                    <seg
+                        n="4"
+                        type="verse"> in ipso vita erat et vita erat lux hominum </seg>
+                    <seg
+                        n="5"
+                        type="verse"> et lux in tenebris lucet et tenebrae eam non conprehenderunt </seg>
+                    <seg
+                        n="6"
+                        type="verse"> fuit homo missus a Deo cui nomen erat Iohannes </seg>
+                    <seg
+                        n="7"
+                        type="verse"> hic venit in testimonium ut testimonium perhiberet de lumine
+                        ut omnes crederent per illum </seg>
+                    <seg
+                        n="8"
+                        type="verse"> non erat ille lux sed ut testimonium perhiberet de lumine </seg>
+                    <seg
+                        n="9"
+                        type="verse"> erat lux vera quae inluminat omnem hominem venientem in mundum </seg>
+                    <seg
+                        n="10"
+                        type="verse"> in mundo erat et mundus per ipsum factus est et mundus eum non
+                        cognovit </seg>
+                    <seg
+                        n="11"
+                        type="verse"> in propria venit et sui eum non receperunt </seg>
+                    <seg
+                        n="12"
+                        type="verse"> quotquot autem receperunt eum dedit eis potestatem filios Dei
+                        fieri his qui credunt in nomine eius </seg>
+                    <seg
+                        n="13"
+                        type="verse"> qui non ex sanguinibus neque ex voluntate carnis neque ex
+                        voluntate viri sed ex Deo nati sunt </seg>
+                    <seg
+                        n="14"
+                        type="verse"> et Verbum caro factum est et habitavit in nobis et vidimus
+                        gloriam eius gloriam quasi unigeniti a Patre plenum gratiae et veritatis </seg>
+                    <seg
+                        n="15"
+                        type="verse"> Iohannes testimonium perhibet de ipso et clamat dicens hic
+                        erat quem dixi vobis qui post me venturus est ante me factus est quia prior
+                        me erat </seg>
+                    <seg
+                        n="16"
+                        type="verse"> et de plenitudine eius nos omnes accepimus et gratiam pro
+                        gratia </seg>
+                    <seg
+                        n="17"
+                        type="verse"> quia lex per Mosen data est gratia et veritas per Iesum
+                        Christum facta est </seg>
+                    <seg
+                        n="18"
+                        type="verse"> Deum nemo vidit umquam unigenitus Filius qui est in sinu
+                        Patris ipse enarravit </seg>
+                    <seg
+                        n="19"
+                        type="verse"> et hoc est testimonium Iohannis quando miserunt Iudaei ab
+                        Hierosolymis sacerdotes et Levitas ad eum ut interrogarent eum tu quis es </seg>
+                    <seg
+                        n="20"
+                        type="verse"> et confessus est et non negavit et confessus est quia non sum
+                        ego Christus </seg>
+                    <seg
+                        n="21"
+                        type="verse"> et interrogaverunt eum quid ergo Helias es tu et dicit non sum
+                        propheta es tu et respondit non </seg>
+                    <seg
+                        n="22"
+                        type="verse"> dixerunt ergo ei quis es ut responsum demus his qui miserunt
+                        nos quid dicis de te ipso </seg>
+                    <seg
+                        n="23"
+                        type="verse"> ait ego vox clamantis in deserto dirigite viam Domini sicut
+                        dixit Esaias propheta </seg>
+                    <seg
+                        n="24"
+                        type="verse"> et qui missi fuerant erant ex Pharisaeis </seg>
+                    <seg
+                        n="25"
+                        type="verse"> et interrogaverunt eum et dixerunt ei quid ergo baptizas si tu
+                        non es Christus neque Helias neque propheta </seg>
+                    <seg
+                        n="26"
+                        type="verse"> respondit eis Iohannes dicens ego baptizo in aqua medius autem
+                        vestrum stetit quem vos non scitis </seg>
+                    <seg
+                        n="27"
+                        type="verse"> ipse est qui post me venturus est qui ante me factus est cuius
+                        ego non sum dignus ut solvam eius corrigiam calciamenti </seg>
+                    <seg
+                        n="28"
+                        type="verse"> haec in Bethania facta sunt trans Iordanen ubi erat Iohannes
+                        baptizans </seg>
+                    <seg
+                        n="29"
+                        type="verse"> altera die videt Iohannes Iesum venientem ad se et ait ecce
+                        agnus Dei qui tollit peccatum mundi </seg>
+                    <seg
+                        n="30"
+                        type="verse"> hic est de quo dixi post me venit vir qui ante me factus est
+                        quia prior me erat </seg>
+                    <seg
+                        n="31"
+                        type="verse"> et ego nesciebam eum sed ut manifestaretur Israhel propterea
+                        veni ego in aqua baptizans </seg>
+                    <seg
+                        n="32"
+                        type="verse"> et testimonium perhibuit Iohannes dicens quia vidi Spiritum
+                        descendentem quasi columbam de caelo et mansit super eum </seg>
+                    <seg
+                        n="33"
+                        type="verse"> et ego nesciebam eum sed qui misit me baptizare in aqua ille
+                        mihi dixit super quem videris Spiritum descendentem et manentem super eum
+                        hic est qui baptizat in Spiritu Sancto </seg>
+                    <seg
+                        n="34"
+                        type="verse"> et ego vidi et testimonium perhibui quia hic est Filius Dei </seg>
+                    <seg
+                        n="35"
+                        type="verse"> altera die iterum stabat Iohannes et ex discipulis eius duo </seg>
+                    <seg
+                        n="36"
+                        type="verse"> et respiciens Iesum ambulantem dicit ecce agnus Dei </seg>
+                    <seg
+                        n="37"
+                        type="verse"> et audierunt eum duo discipuli loquentem et secuti sunt Iesum </seg>
+                    <seg
+                        n="38"
+                        type="verse"> conversus autem Iesus et videns eos sequentes dicit eis quid
+                        quaeritis qui dixerunt ei rabbi quod dicitur interpretatum magister ubi
+                        habitas </seg>
+                    <seg
+                        n="39"
+                        type="verse"> dicit eis venite et videte venerunt et viderunt ubi maneret et
+                        apud eum manserunt die illo hora autem erat quasi decima </seg>
+                    <seg
+                        n="40"
+                        type="verse"> erat autem Andreas frater Simonis Petri unus ex duobus qui
+                        audierant ab Iohanne et secuti fuerant eum </seg>
+                    <seg
+                        n="41"
+                        type="verse"> invenit hic primum fratrem suum Simonem et dicit ei invenimus
+                        Messiam quod est interpretatum Christus </seg>
+                    <seg
+                        n="42"
+                        type="verse"> et adduxit eum ad Iesum intuitus autem eum Iesus dixit tu es
+                        Simon filius Iohanna tu vocaberis Cephas quod interpretatur Petrus </seg>
+                    <seg
+                        n="43"
+                        type="verse"> in crastinum voluit exire in Galilaeam et invenit Philippum et
+                        dicit ei Iesus sequere me </seg>
+                    <seg
+                        n="44"
+                        type="verse"> erat autem Philippus a Bethsaida civitate Andreae et Petri </seg>
+                    <seg
+                        n="45"
+                        type="verse"> invenit Philippus Nathanahel et dicit ei quem scripsit Moses
+                        in lege et prophetae invenimus Iesum filium Ioseph a Nazareth </seg>
+                    <seg
+                        n="46"
+                        type="verse"> et dixit ei Nathanahel a Nazareth potest aliquid boni esse
+                        dicit ei Philippus veni et vide </seg>
+                    <seg
+                        n="47"
+                        type="verse"> vidit Iesus Nathanahel venientem ad se et dicit de eo ecce
+                        vere Israhelita in quo dolus non est </seg>
+                    <seg
+                        n="48"
+                        type="verse"> dicit ei Nathanahel unde me nosti respondit Iesus et dixit ei
+                        priusquam te Philippus vocaret cum esses sub ficu vidi te </seg>
+                    <seg
+                        n="49"
+                        type="verse"> respondit ei Nathanahel et ait rabbi tu es Filius Dei tu es
+                        rex Israhel </seg>
+                    <seg
+                        n="50"
+                        type="verse"> respondit Iesus et dixit ei quia dixi tibi vidi te sub ficu
+                        credis maius his videbis </seg>
+                    <seg
+                        n="51"
+                        type="verse"> et dicit ei amen amen dico vobis videbitis caelum apertum et
+                        angelos Dei ascendentes et descendentes supra Filium hominis</seg>
+                </p>
+            </div>
+        </body>
+    </text>
+</TEI>

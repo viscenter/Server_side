@@ -1,0 +1,353 @@
+import edu.harvard.chs.cts3.*
+import edu.harvard.chs.ctsjpa.*
+
+/*
+
+CTS : a groovlet implementing the CTS 3 specification using
+a JPA data source as the backend.
+
+Configure one or more services by placing in the configs directory 
+files that validate against the configs/ctsconfig.rng
+schema.  By default, the service will use configs/config.xml, but you
+can also include an HTTP parameter named "config" as part of the request,
+with the name of the file to use for configuration.
+
+This script does little more than check request parameters:
+the real work is all handed off to methods of the cts3 library.
+
+*/
+
+
+
+def installType = "APPENGINE"
+
+
+def getAEInventory = {
+    def inv = null
+    def confDir = context.getRealPath("/inventories")
+    def invFileName = "inventory.xml"
+    if (request.getParameter("inv")) {
+        invFileName = request.getParameter("inv")
+    }
+
+    def tiFile = new File(confDir + "/" + invFileName)
+    if (tiFile) {
+        inv = new TextInventory(tiFile)
+    }
+    inv
+}
+
+def getRDBMSInventory = {
+    def inv = null
+    def confDir = context.getRealPath("/configs")
+    def confFileName = "config.xml"
+    if (request.getParameter("config")) {
+        confFileName = request.getParameter("config")
+    }
+
+    def confFile = new File(confDir + "/" + confFileName)
+    if (confFile.exists()) {
+        def confXml = new XmlSlurper().parse(confFile)
+        def urlAtt = confXml.inventory."@url"
+        def fileAtt = confXml.inventory."@file"
+        if (urlAtt != "") {
+            def tiUrl = new URL(confXml.inventory."@url".toString())
+            inv = new TextInventory( tiUrl)
+                
+        } else {
+            def baseDir = context.getRealPath("/inventories")
+            def tiFile = new File(baseDir + "/" + fileAtt)
+            inv = new TextInventory(tiFile)
+        }
+    }
+    // return value:
+    inv
+}
+
+
+/*
+* Closure adding the CTS spec's syntax for error messages
+* to a message and code combination.
+*/
+def errorReply = {msg,code,xsl ->
+    if (xsl) {	 
+	println """<?xml-stylesheet type="text/xsl" href="xslt/getValidReff.xsl"?>"""
+    }
+    println """<cts:CTSError  
+    xmlns:cts="http://chs.harvard.edu/xmlns/cts3" 
+    xmlns="http://chs.harvard.edu/xmlns/cts3" >
+    <message>${msg}</message>
+    <code>${code}</code>
+    </cts:CTSError> """
+}
+
+
+response.setContentType("text/xml")
+response.setHeader( "Access-Control-Allow-Origin", "*")
+
+// make sure required parameters are included, and
+// syntax of urn is valid:
+boolean paramsIncluded = false
+boolean urnOk = false
+
+def reqName = request.getParameter("request")
+def urnParam = request.getParameter("urn")
+def withXslt = request.getParameter("withXSLT")
+def invParam = request.getParameter("inv")
+
+
+if (!withXslt) {
+    withXslt = false	
+}
+
+if (!reqName) {
+    errorReply( "INVALID REQUEST. Missing required parameter: 'request'", "1",withXslt)
+
+
+} else if ((reqName != "GetCapabilities") && (!urnParam)) {
+    errorReply( "INVALID REQUEST. Missing required parameter: 'urn'", "1",withXslt)
+
+} else{
+    paramsIncluded = true
+}
+
+
+
+// The required URN parameter as a CtsUrn object:
+CtsUrn urn
+
+if ((reqName == "GetCapabilities") || (reqName == "poke")) {
+    // no URN required for GetCapaiblitie
+    urnOk = true
+
+} else {
+    try {
+	urn = new CtsUrn(urnParam)
+	urnOk = true
+    } catch (Exception e) {
+	// URN is no good
+	if (paramsIncluded) {
+	    errorReply( "BAD URN SYNTAX: ${urnParam}", "2",withXslt)
+	}
+    }
+}
+
+// We have both necessary parameters and a syntatically
+// valid URN:
+if (urnOk) {
+
+    // handle differently for JPA = RDBMS or APPENGINE
+
+    def inv = null
+
+    // For RDBMS installs, get inventory name
+    // from a full config file, including JDBC
+    // configuration info:
+    if (installType == "RDBMS") {
+        inv = getRDBMSInventory()
+
+
+    } else {
+        // For AppEngine installs, just
+        // directly use name of inventory file:
+        inv = getAEInventory()
+    }
+
+
+
+    boolean invOk = false
+    if (inv) {
+        invOk = true
+	
+    } else {
+        errorReply("Unable to create text inventory from infornmation in config file", "99",withXslt)
+    }
+
+    if (invOk) {
+        def repo = new JpaCtsRepository()
+
+        // more properly, should
+        // test that db connection works
+        // and that invOk == true before
+        // calling constructor for Cts object
+        def cts = new Cts(inv,repo)
+
+       if (invParam) {
+            cts.setTiName(invParam)
+       }
+
+
+        switch (reqName) {
+
+            case "poke":
+                println "1"
+                break
+	    
+	    case "GetCapabilities":
+                if (withXslt) {	 
+               // println  """<?xml-stylesheet type="text/xsl" href="xslt/getCaps.xsl"?>"""
+ println  """<?xml-stylesheet type="text/xsl" href="xslt/${withXslt}.xsl"?>"""
+	    }
+//OutputStreamWriter osw = new OutputStreamWriter(System.out, "UTF-8")
+println cts.replyToGetCapabilities()
+//osw.close()
+	    break
+
+
+
+	    case "GetValidReff":
+
+	    if (request.getParameter("level")) {
+		int l
+		try  {
+		    l = new Integer(request.getParameter("level")).intValue()
+		    if (withXslt) {	 
+	       	    //println """<?xml-stylesheet type="text/xsl" href="xslt/getValidReff.xsl"?>"""
+println """<?xml-stylesheet type="text/xsl" href="xslt/${withXslt}.xsl"?>"""
+	    	    }
+
+		    println cts.replyToGetValidReff(urn,l)
+
+		} catch (NumberFormatException nfe) {
+		    println errorReply("Level parameter must be an integer", "1",withXslt)
+		}
+
+	    } else {
+		    if (withXslt) {	 
+	       	    //println """<?xml-stylesheet type="text/xsl" href="xslt/getValidReff.xsl"?>"""
+println """<?xml-stylesheet type="text/xsl" href="xslt/${withXslt}.xsl"?>"""
+	    	    }
+
+		println cts.replyToGetValidReff(urn)
+	    }
+
+	    break
+
+	    case "GetFirstRef":
+    		println cts.replyToGetFirstRef(urn)	
+	    break
+
+
+	    case "GetPassage":
+	    if (request.getParameter("context")) {
+		int c
+		try  {
+		   c = new Integer(request.getParameter("context")).intValue()
+		    if (withXslt) {	 
+	       	    //println """<?xml-stylesheet type="text/xsl" href="xslt/getPassage.xsl"?>"""
+println """<?xml-stylesheet type="text/xsl" href="xslt/${withXslt}.xsl"?>"""
+	    	    }
+
+		    println cts.replyToGetPassage(urn, c)
+
+		} catch (NumberFormatException nfe) {
+		    return errorReply("Context parameter must be an integer", "1",withXslt)
+		}
+
+	    } else {
+		    if (withXslt) {	 
+	       	    //println """<?xml-stylesheet type="text/xsl" href="xslt/getPassage.xsl"?>"""
+println """<?xml-stylesheet type="text/xsl" href="xslt/${withXslt}.xsl"?>"""
+	    	    }
+		println cts.replyToGetPassage(urn)
+	    }
+	    break
+
+	    case "GetPassagePlus":
+	    if (request.getParameter("context")) {
+                int c
+		try  {
+		    c = new Integer(request.getParameter("context")).intValue()
+   if (withXslt) {	 
+	      // 	    println """<?xml-stylesheet type="text/xsl" href="xslt/getPassage.xsl"?>"""}
+ 	    println """<?xml-stylesheet type="text/xsl" href="xslt/${withXslt}.xsl"?>"""}
+		    println cts.replyToGetPassagePlus(urn, c)
+		} catch (NumberFormatException nfe) {
+		    return errorReply("Context parameter must be an integer", "1",withXslt)
+		}
+
+	    } else {
+   if (withXslt) {	 
+	//       	    println """<?xml-stylesheet type="text/xsl" href="xslt/getPassage.xsl"?>"""
+       	    println """<?xml-stylesheet type="text/xsl" href="xslt/${withXslt}.xsl"?>"""
+}
+		println cts.replyToGetPassagePlus(urn)
+	    }
+	    break
+
+
+	    case "GetPrevNextUrn":
+	    println cts.replyToGetPrevNextUrn(urn)
+	    break     
+
+
+/*
+	    case "GetPrevNUrns":
+	     if (request.getParameter("n")) {
+		int n
+		try  {
+		    n = new Integer(request.getParameter("n")).intValue()
+		    println cts.replyToGetPrevNUrns(urn, n)
+		} catch (NumberFormatException nfe) {
+		    return errorReply("n parameter must be an integer", "1",withXslt)
+		}
+
+	     } else {
+	     return errorReply("Missing required n parameter","4",withXslt)
+	     }
+	    break     
+
+	    case "GetNextNUrns":
+	    // get n param
+	    if (request.getParameter("n")) {
+		int n
+		try  {
+		    n = new Integer(request.getParameter("n")).intValue()
+		    println cts.replyToGetPrevNUrns(urn, n)
+		} catch (NumberFormatException nfe) {
+		    return errorReply("n parameter must be an integer", "1",withXslt)
+		}
+
+	     } else {
+		return errorReply("Missing required n parameter","4",withXslt)
+	     }
+	    break     
+
+
+	    case "GetCitableText":
+	    println cts.replyToGetCitableText(urn)
+	    break     
+
+
+	    case "OptionSupported":
+	    def ctsOpt = request.getParameter("ctsOption")
+	    println cts.replyToOptionSupported(ctsOpt)
+	    break
+
+	    case "UrnTopology":
+	    def urnParam1 = request.getParameter("urn1")
+	    def urnParam2 = request.getParameter("urn2")
+	    CtsUrn urn1 = new CtsUrn(urnParam1)
+	    CtsUrn urn2 = new CtsUrn(urnParam2)
+	    println cts.replyToUrnTopology(urn1,urn2)
+	    break     
+*/
+	    default:
+	    def msg = ""
+	    if (reqName) {
+		errorReply( "INVALID REQUEST. Request name not recognized: ${reqName}", "1",withXslt)
+	    }
+
+	    break
+	} //switch
+
+
+    } // configFile exists
+
+
+
+
+
+} // urnOk
+
+

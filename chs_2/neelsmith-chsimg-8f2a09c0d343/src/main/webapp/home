@@ -1,0 +1,41 @@
+html.html {
+    head {
+        meta(charset : "UTF-8")
+        title("CITE Collection extension: CHS Image Service")
+        link(type: "text/css", rel : "stylesheet",  
+             href : "css/massive.css", title: "concat of 3 hmt-doc style sheets")
+    }
+
+    body {
+        header (role: "banner") {
+            mkp.yield("CHS Image Extension")
+            nav (role: "navigation") {
+                mkp.yield("chsimg: ")
+                a(href: "about", "about")
+                mkp.yield(" | ")
+                a(href: "contents", "contents")
+                mkp.yield(" | ")
+                a(href: "requests", "requests")
+            }
+        }
+        article (role: "main") {
+            h1 ("CITE Collection extension: CHS Image Services")
+            p ("""This servlet implements the
+CHS Image service, allowing you to use binary image data
+for images canonically cited as CITE Collection objects.
+""")
+p {
+mkp.yield("""The CHS Image service is designed for automated use by other software
+following the CHS Image service API, but if you want to
+see how the syntax of the requests work, you can use the forms on 
+""")
+a (href : "requests", "this page")
+mkp.yield(""" to submit reqeusts manually.""")
+
+}
+
+
+        }
+    }
+}
+

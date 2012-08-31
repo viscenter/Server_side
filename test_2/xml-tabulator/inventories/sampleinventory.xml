@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="TextInventory.rng" type="xml"?>
+<?xml-stylesheet type="text/css" href="textinventory.css"?>
+<TextInventory tiid="hmt" tiversion="3.0.rc1"
+	xmlns="http://chs.harvard.edu/xmlns/cts3/ti"
+	xmlns:dc="http://purl.org/dc/elements/1.1">
+	<ctsnamespace abbr="greekLit" ns="chs.harvard.edu/ctsns/greekLit">
+		<description xml:lang="eng">The "First Thousand Years of Greek"
+			project's inventory of Greek texts.</description>
+	</ctsnamespace>
+	<ctsnamespace abbr="demo" ns="chs.harvard.edu/ctsns/ctsdemo">
+		<description xml:lang="eng">A set of demo texts freely distributed with
+			the CTS-Universal implementation of the Canonical Text Services
+			protocol.</description>
+	</ctsnamespace>
+	<collection id="ctsdemo" isdefault="yes">
+		<title xml:lang="eng" xmlns="http://purl.org/dc/elements/1.1">CTS
+			demo.</title>
+		<creator xmlns="http://purl.org/dc/elements/1.1">Neel Smith</creator>
+		<creator xmlns="http://purl.org/dc/elements/1.1">Christopher
+			Blackwell</creator>
+		<coverage xml:lang="eng" xmlns="http://purl.org/dc/elements/1.1"
+			>Selected texts to use in illustrating CTS featurs.</coverage>
+		<description xml:lang="eng" xmlns="http://purl.org/dc/elements/1.1">Demo
+			of CTS-Universal.</description>
+		<rights xml:lang="eng" xmlns="http://purl.org/dc/elements/1.1"> Licensed
+			under the terms of Creative Commons attribution-share-alike
+			license.</rights>
+	</collection>
+	<citationSchemes>
+		<scheme projid="poeticline" type="logical">
+			<label>line</label>
+			<description xml:lang="eng">Poem cited by individual
+				lines.</description>
+		</scheme>
+	</citationSchemes>
+	<textgroup projid="demo:shakespeare">
+		<groupname xml:lang="eng">Shakespeare</groupname>
+		<work projid="demo:sonnets" xml:lang="eng">
+			<title xml:lang="eng">Sonnet 35</title>
+			<edition projid="demo:1609">
+				<label xml:lang="eng">Edition of 1609</label>
+				<description xml:lang="eng">Edition of 1609 transcribed at
+					http://www.shakespeares-sonnets.com/sonn01.htm</description>
+				<online docname="shakespeare-sonn35.xml">
+					<validate schema="chstei.rng"/>
+					<namespaceMapping abbreviation="tei"
+						nsURI="http://www.tei-c.org/ns/1.0"/>
+					<citationMapping>
+						<citation label="sonnet"
+							scope="/tei:TEI/tei:text/tei:body"
+							xpath="/tei:div[@n = '?']"><citation label="line"
+							scope="/tei:TEI/tei:text/tei:body/tei:div[@n = '?']"
+							xpath="/tei:l[@n = '?']"/></citation>
+					</citationMapping>
+				</online>
+			</edition>
+		</work>
+	</textgroup>
+	<textgroup projid="demo:ar">
+		<groupname xml:lang="eng">Arabic texts</groupname>
+		<work projid="demo:quran" xml:lang="ar">
+			<title xml:lang="eng">Quran</title>
+			<edition projid="demo:ar">
+				<label xml:lang="eng">M. H. Shakir</label>
+				<description xml:lang="eng">TEI-conformant XML text freely
+				available from Perseus Project</description>
+				<online docname="Sura1-ar.xml">
+					<validate schema="chstei.rng"/>
+					<namespaceMapping abbreviation="tei"
+						nsURI="http://www.tei-c.org/ns/1.0"/>
+					<citationMapping>
+						<citation label="sura" xpath="/tei:div[@n = '?' ]"
+							scope="/tei:TEI/tei:text/tei:body">
+							<citation label="line" xpath="/tei:l[@n = '?']"
+								scope="/tei:TEI/tei:text/tei:body/tei:div[@n = '?']"/>
+						</citation>
+					</citationMapping>
+				</online>
+			</edition>
+			<translation projid="demo:en" xml:lang="eng">
+				<label xml:lang="eng">Muhammad M. Pickthall</label>
+				<description xml:lang="eng">TEI-conformant XML text freely
+					available from Perseus Project</description>
+				<online docname="Sura1-en.xml">
+					<validate schema="chstei.rng"/>
+					<namespaceMapping abbreviation="tei"
+						nsURI="http://www.tei-c.org/ns/1.0"/>
+					<citationMapping>
+						<citation label="sura" xpath="/tei:div[@n = '?' ]"
+							scope="/tei:TEI/tei:text/tei:body">
+							<citation label="line" xpath="/tei:l[@n = '?']"
+								scope="/tei:TEI/tei:text/tei:body/tei:div[@n = '?']"/>
+						</citation>
+					</citationMapping>
+				</online>
+			</translation>
+		</work>
+	</textgroup>
+	<textgroup projid="greekLit:tlg0031">
+		<groupname xml:lang="eng">New Testament</groupname>
+		<work projid="greekLit:tlg004" xml:lang="grc">
+			<title xml:lang="eng">Gospel according to John</title>
+			<edition projid="greekLit:chs01">
+				<label xml:lang="eng">Stuttgart (1968)</label>
+				<description xml:lang="eng">Digital version included in
+					TLG</description>
+			</edition>
+			<edition projid="greekLit:chs02">
+				<label xml:lang="eng">Westcott and Hort (1885)</label>
+				<description xml:lang="eng">TEI-conformant XML text freely
+					available from Perseus Project</description>
+			</edition>
+			<translation projid="greekLit:chs03" xml:lang="lat">
+				<label xml:lang="eng">Vulgate</label>
+				<description xml:lang="eng">TEI-conformant XML text freely
+					available from Perseus Project</description>
+				<online docname="John1-lat.xml">
+					<validate schema="chstei.rng"/>
+					<namespaceMapping abbreviation="tei"
+						nsURI="http://www.tei-c.org/ns/1.0"/>
+					<citationMapping>
+						<citation label="chapter" xpath="/tei:div[@n = '?' ]"
+							scope="/tei:TEI/tei:text/tei:body">
+							<citation label="verse" xpath="/tei:seg[@n = '?']"
+								scope="/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:p"/>
+						</citation>
+					</citationMapping>
+				</online>
+			</translation>
+			<translation projid="greekLit:chs04" xml:lang="eng">
+				<label xml:lang="eng">World English Bible</label>
+				<description xml:lang="eng">TEI-conformant XML text freely
+					available from Perseus Project</description>
+				<online docname="john1-en.xml">
+					<validate schema="chstei.rng"/>
+					<namespaceMapping abbreviation="tei"
+						nsURI="http://www.tei-c.org/ns/1.0"/>
+					<citationMapping>
+						<citation label="chapter" xpath="/tei:div[@n = '?']"
+							scope="/tei:TEI/tei:text/tei:body">
+							<citation label="verse" xpath="/tei:seg[@n = '?' ]"
+								scope="/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:p"
+							/>
+						</citation>
+					</citationMapping>
+				</online>
+			</translation>
+		</work>
+	</textgroup>
+</TextInventory>

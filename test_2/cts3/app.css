@@ -1,0 +1,246 @@
+﻿/* ......................... */
+/* Basic Structure */
+
+html	{
+	font-family: 		"Lucida Grande", "Trebuchet MS", Tahoma, Verdana, Arial, sans-serif;
+	font-size: 		0.9em;
+	background:		#eceadf;	
+}
+
+body	{
+	padding:5px;
+}
+
+header {
+	display: block;
+	background: url(/banner.png) repeat-x;
+	height: auto;
+	margin-top: -5px;
+	margin-left: -5px;
+	margin-right: -5px;
+	padding-left: 5px;
+	padding-top: 60px;
+	padding-bottom: 5px;
+	font-size: 80%;
+}
+
+sidebar {
+	display: block;
+	border-right: 1px solid #dfdbce;
+	width: 260px;
+	height: auto;
+	float: left;
+	margin-right: 20px;
+	padding: 10px;
+	padding-left: 0px;
+	padding-bottom: 5em;
+}
+
+article {
+	padding: 10px;
+	margin-left: 25px;
+	margin-right: 25;
+	display: block;
+}
+
+nav {
+	display: block;
+	clear: both;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	margin: 0px;
+	border-top: 1px solid #dfdbce;
+	border-bottom: 1px solid #dfdbce;
+	font-size: 80%;
+}
+
+p {
+	display: block;
+	margin-bottom: 1em;
+}
+
+nav p {
+	padding: 0px;
+	margin: 0px;
+}
+
+footer {
+	display: block;
+	padding: 10px;
+	color: #aca89b;
+	clear: both;
+	font-size: 80%;
+}
+
+
+
+/* ......................... */
+/* Basic presentational display */
+
+.chs_text_column {
+	max-width: 65em;
+}
+
+a	{
+	text-decoration: 	none;
+	color: maroon;
+}
+
+a:hover {
+	border-color: red;
+	color: red;
+}
+
+
+h1 {
+	font-size: 150%;
+	padding-bottom: 0.5em;
+}
+
+h2 {
+	font-size: 125%;
+	padding-bottom: 0.5em;
+	padding-top: 0.5em;
+}
+
+em {
+	font-style: italic;
+}	
+
+
+/* ......................... */
+/* Display of special elements */
+
+address {
+	font-size: 80%;
+	padding-top: 3em;
+	width: 100%;
+}
+
+address:before {
+	content: "— ";
+}
+
+time {
+	padding-left: 1em;
+	color: #aca89b;
+}
+
+time:before {
+	content: "Revision of ";
+}
+
+.invisible {
+	display: none;
+}	
+
+
+.data {
+    display : none;
+}
+
+.book_title {
+	font-style: italic;
+}	
+
+.bibliography li {
+	padding-bottom: 1em;
+}
+
+.superscript {
+	font-size: 80%;
+	position: relative;
+	bottom: 5px;
+}
+
+.prevnext {
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+strong {
+	font-weight: bold;
+}
+
+
+.chs-alphaios-hint {
+	font-size: 80%;
+	background: #dfdbce;
+	border: 1px solid #aca89b;
+	padding: 9px;
+	width: 30%;
+	float: right;
+	z-index: 100;
+	box-shadow: 0.4em 0.4em 1em gray;
+	-moz-box-shadow: 0.4em 0.4em 1em gray;
+	-webkit-box-shadow: 0.4em 0.4em 1em gray;
+}
+
+
+/* ......................... */
+/* Lists */
+
+li {
+	padding: 5px;
+	
+}
+
+ul {
+	padding: 15px;
+	border: 1px solid #dfdbce;
+	margin-bottom: 5px;
+}
+
+ul ul {
+	padding: 15px;
+	border: none;
+}
+
+ol {
+	padding: 15px;
+}
+
+li:nth-child(even) {
+	background-color: 	#dfdbce;
+}
+
+/* ......................... */
+/* Forms */
+
+form {  
+    margin: 0px;  
+    padding: 20px;
+    border : 1px solid #dfdbce;
+}
+
+legend {  
+    margin-left: 0em;  
+    color: black; 
+    font-weight: bold;
+    padding-bottom: 10px;
+    background-color:inherit;
+    /*font-weight: bold;*/
+}
+fieldset ol {  
+    /*padding: 1em 1em 0 1em;  */
+    padding :  0px;
+    margin: 0px;
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+fieldset li {  
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+fieldset.submit {  
+    float: none;  
+    width: auto;  
+    padding-left: 0em;
+    margin-top: 10px;
+}
+
+label {
+}

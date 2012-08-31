@@ -1,0 +1,73 @@
+
+import javax.persistence.*
+import edu.harvard.chs.cts3.CtsUrn
+
+import edu.harvard.chs.ctsjpa.*
+
+import groovy.xml.MarkupBuilder
+
+def installType = "APPENGINE"
+
+def urnStr = request.getParameter("urn")
+if ((urnStr != null) && (urnStr != "")) {
+    
+    def nodeList = new JpaCtsRepository().getNodesForUrn(urnStr)
+
+    html.html {
+        head {
+            title ("Search CTS for URN ${urnStr} ")
+            link(type: "text/css", rel : "stylesheet",  href : "../admin.css", title: "admin style sheet")
+        }
+
+        body {
+            if (installType == "RDBMS") {
+                p(class:"login") {
+                    a (href : "logout", "Logout")
+                }
+            }
+
+            p {
+                a(href : "../home", "CTS home")
+            }
+            p {
+                a(href : "admin", "Service administration")
+            }
+
+            h1("Search results for urn ${urnStr}")
+            if (nodeList?.size() > 0) {
+                p ("Total nodes: ${nodeList.size()}" )
+                ul {
+                    nodeList.each { n ->
+                        li (n)
+                    }
+                }
+            } else {
+                p("No matching results found.")
+            }
+        }
+    }
+} else {
+
+
+
+
+    html.html {
+        head {
+            title ("Search CTS")
+            link(type: "text/css", rel : "stylesheet",  href : "../admin.css", title: "admin style sheet")
+        }
+
+        body {
+            p {
+                a(href : "../home", "CTS home")
+            }
+            p {
+                a(href : "admin", "Service administration")
+            }
+            h1 ("Search CTS")
+            p("No URN supplied!")
+        }
+    }
+}
+
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="citeconfig.rng" type="xml"?>
+
+<chsimgconfig url="http://localhost:8989/chsimg/Img?">
+  <jdbcConfig dburl="jdbc:postgresql://localhost/img2" 
+	      driver="org.postgresql.Driver" 
+	      user="" 
+	      password=""/>
+  <iipimage url="http://amphoreus.hpcc.uh.edu/fcgi-bin/iipsrv.fcgi" includeZoomable="false"/>
+  <defaults width="800"/>
+  <contents>
+    <include label="Venetus A"/>
+    <include label="Venetus B"/>
+    <include label="Marciana 458"/>
+    <include label="Escorial Upsilon 1.1"/>
+    <include label="Escorial Omega 1.12"/>
+  </contents>
+</chsimgconfig>

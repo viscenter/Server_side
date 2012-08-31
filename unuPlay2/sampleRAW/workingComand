@@ -1,0 +1,11 @@
+../../teem-1.8.0-linux.32/bin/unu make -h -i  Chad010_002.png -t uchar -e raw -s 256 256 178 -sp 1 1 1  -kv "source URL:=${DATAPATH}/bonsai.raw.gz"  "courtesy:=S. Roettger, VIS, University of Stuttgart" -o test.nrrd
+
+
+../../teem-1.8.0-linux.32/bin/unu project -i test.nrrd -a 2 -m sum | ../../teem-1.8.0-linux.32/bin/unu heq -b 3000 -s 1 -a 0.5 | ../../teem-1.8.0-linux.32/bin/unu quantize -b 8 -o shit.png
+
+
+../../teem-1.8.0-linux.32/bin/unu make -h -i  Chad010_002.ppm -t uchar -e raw -s 3 2000 1500 -sp 1 1 1   -o test3.2.nrrd
+
+../../teem-1.8.0-linux.32/bin/unu project -i test3.2.nrrd -a 0 -m max -o john3.pgm
+
+../../teem-1.8.0-linux.32/bin/unu join -i test4.* -a 1 -incr -o join4.A1.nrrd

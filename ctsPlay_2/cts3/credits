@@ -1,0 +1,67 @@
+import edu.harvard.chs.cts3.LibraryInfo
+
+
+def libraryInfo = new LibraryInfo()
+def ftrString = "Built with the cts3 library, version ${libraryInfo.getLibraryVersion()}, packaged on ${libraryInfo.getLibraryDate()}"
+
+
+def installType = "APPENGINE"
+html.html {
+    head {
+        title("Credits and acknowledgments")
+        link(type: "text/css", rel : "stylesheet",  
+             href : "normalize.css", title: "CTS style sheet")
+        link(type: "text/css", rel : "stylesheet",  
+             href : "app.css", title: "CTS style sheet")
+    }
+
+    body {
+        header("Center for Hellenic Studies: Canonical Text Services")
+        nav {
+            p { 
+                mkp.yld("CTS: ")
+                a(href : "home", "home")
+            }
+        }
+
+
+        article {
+        h1 ("Credits and acknowledgments")
+        p ("""The CTS protocol was designed by Neel Smith, Christopher
+Blackwell and Gabriel Weaver.  Neel Smith was primarily responsible for coding the library and service for the JVM;  Gabriel Weaver wrote the python-language impementations for the AppEngine platform; Christopher Blackwell's many contributions include UI design and writing the project's CSS. Matteo Romanello
+has been a relentless tester at all stages of work.""")
+        p("""This work would have been impossible without the continued
+support of the Center for Hellenic Studies.  Our thanks go above all to
+its director, Gregory Nagy, and to its Director of IT and Publications,
+Leonard Muellner.""")
+
+        p("""Many other people have contributed to the work of the
+CHS Technical Working Group leading to the development of CTS.
+The following alphabetical list is limited to
+participants in meetings or conferences of the Working Group: we
+thank all of them, and apologize to any other colleagues
+whose names we may have omitted:""")
+
+        ul {
+            li ("Jason Aftosmis")
+            li ("Hugh Cayless")
+            li ("Gregory Crane")
+            li ("Tom Elliott")
+            li ("Ryan Gabbard")
+            li ("Andrew Gollan")
+            li ("Sebastian Heath")
+            li ("David Mimno")
+            li ("Neil Moore")
+            li ("Bruce Robertson")
+            li ("Jeff Rydberg-Cox")
+            li ("Ross Scaife")
+            li ("John Wallrodt")
+        }
+        }
+        footer( "${ftrString}")
+    }
+}
+
+
+
+

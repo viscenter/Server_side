@@ -1,0 +1,16 @@
+namespace#tei#http://www.tei-c.org/ns/1.0#
+urn:cts:demo:ar.quran.ar:1.1#1##2#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="1" xmlns="http://www.tei-c.org/ns/1.0"> بِسْمِ اللّهِ الرَّحْمَنِ الرَّحِيمِ</l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+urn:cts:demo:ar.quran.ar:1.2#2#1#3#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="2" xmlns="http://www.tei-c.org/ns/1.0"> الْحَمْدُ للّهِ رَبِّ الْعَالَمِينَ </l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+urn:cts:demo:ar.quran.ar:1.3#3#2#4#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="3" xmlns="http://www.tei-c.org/ns/1.0"> الرَّحْمنِ الرَّحِيمِ </l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+urn:cts:demo:ar.quran.ar:1.4#4#3#5#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="4" xmlns="http://www.tei-c.org/ns/1.0"> مَلِكِ يَوْمِ الدِّينِ </l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+urn:cts:demo:ar.quran.ar:1.5#5#4#6#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="5" xmlns="http://www.tei-c.org/ns/1.0"> إِيَّاكَ نَعْبُدُ وإِيَّاكَ نَسْتَعِينُ </l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+urn:cts:demo:ar.quran.ar:1.6#6#5#7#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="6" xmlns="http://www.tei-c.org/ns/1.0">اهدِنَا الصِّرَاطَ المُستَقِيمَ</l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+urn:cts:demo:ar.quran.ar:1.7#7#6#8#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="7" xmlns="http://www.tei-c.org/ns/1.0"> صِرَاطَ الَّذِينَ أَنعَمتَ عَلَيهِمْ غَيرِ المَغضُوبِ عَلَيهِمْ وَلاَ الضَّالِّينَ</l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+namespace#tei#http://www.tei-c.org/ns/1.0#
+urn:cts:demo:ar.quran.ar:1.1#1##2#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="1" xmlns="http://www.tei-c.org/ns/1.0"> بِسْمِ اللّهِ الرَّحْمَنِ الرَّحِيمِ</l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+urn:cts:demo:ar.quran.ar:1.2#2#1#3#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="2" xmlns="http://www.tei-c.org/ns/1.0"> الْحَمْدُ للّهِ رَبِّ الْعَالَمِينَ </l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+urn:cts:demo:ar.quran.ar:1.3#3#2#4#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="3" xmlns="http://www.tei-c.org/ns/1.0"> الرَّحْمنِ الرَّحِيمِ </l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+urn:cts:demo:ar.quran.ar:1.4#4#3#5#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="4" xmlns="http://www.tei-c.org/ns/1.0"> مَلِكِ يَوْمِ الدِّينِ </l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+urn:cts:demo:ar.quran.ar:1.5#5#4#6#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="5" xmlns="http://www.tei-c.org/ns/1.0"> إِيَّاكَ نَعْبُدُ وإِيَّاكَ نَسْتَعِينُ </l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+urn:cts:demo:ar.quran.ar:1.6#6#5#7#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="6" xmlns="http://www.tei-c.org/ns/1.0">اهدِنَا الصِّرَاطَ المُستَقِيمَ</l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']
+urn:cts:demo:ar.quran.ar:1.7#7#6#8#/tei:TEI/tei:text/tei:body/tei:div[@n = '1']#<l n="7" xmlns="http://www.tei-c.org/ns/1.0"> صِرَاطَ الَّذِينَ أَنعَمتَ عَلَيهِمْ غَيرِ المَغضُوبِ عَلَيهِمْ وَلاَ الضَّالِّينَ</l>#/tei:TEI/tei:text/tei:body/tei:div[@n = '?']/tei:l[@n = '?']

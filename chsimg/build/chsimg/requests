@@ -1,0 +1,175 @@
+
+
+html.html {
+    head {
+        title("CHS Image Service: requests")
+        link(type: "text/css", rel : "stylesheet",  
+             href : "cts.css", title: "CTS style sheet")
+    }
+
+    body {
+        div (class : "menu") {
+            p { 
+                mkp.yld("Collection service: ")
+	a (href: "home", "CHS Image extension  ")
+            }
+        }
+
+
+        div (class : "cts-content"){
+	
+
+            h1 ("CHS Image Service: requests")
+	p {
+	mkp.yld("The CHS Image service understands three requests:")
+	ul {
+	li("GetBinaryImage")
+	li("GetCaption")
+	li("GetRights")
+}
+	}
+	p {
+	mkp.yld ("If the service optionally provides support for zoomable images, it understands one additional request:")
+	ul  {
+li ("GetIIPMooViewer")
+}
+}
+
+            h2("GetBinaryImage") 
+            p("Supply a CITE Object URN  or ID in the default namespace, and get back binary image data.")
+            p("""The URN or ID may be qualified by an image subreference identifying a RoI
+expressed as four comma-delighted values ranging from 0<= n < 1.0.  The four values are:""")
+	ol {
+	li("initial x position (left edge)")
+	li("initial y position (top edge)")
+	li("width")
+	li("height")
+
+}
+            p("Further parameters:")
+            ul {
+                li ("""Optionally, a w (width) parameter for output in pixels may be included.
+Note that in combination with a subreference, w refers to the size
+of the ENTIRE source image, from which the subreference RoI is clipped
+""")
+                
+            }
+            p("""Future version might support additional parameter for preferred format, but
+right now, you get a JPEG.""")
+
+            h3 ("Retrieve by URN")
+            def demoUrn = "urn:cite:hmt:chsimg.VA001VN-0503"
+            form (action : "Img", method : "get") {
+                input (type : "hidden", name : "request", value : "GetBinaryImage")
+                input (type : "text", name : "urn", value : demoUrn)
+                mkp.yld ("Width:")
+                select (name : "w") {
+                    option(value : "400", "400 pixels")
+                    option(value : "1000", "1000 pixels")
+                    option(value : "3000", "3000 pixels")
+                    option(value : "5500", "Maximum size")
+                }
+                input (type : "submit", value : "Get image")
+            }
+            h3 ("Retrieve by ID in default namespace")
+            def demoId = "VA001VN-0503"
+            form (action : "Img", method : "get") {
+                input (type : "hidden", name : "request", value : "GetBinaryImage")
+                input (type : "text", name : "id", value : demoId)
+                mkp.yld ("Width:")
+                select (name : "w") {
+                    option(value : "400", "400 pixels")
+                    option(value : "1000", "1000 pixels")
+                    option(value : "3000", "3000 pixels")
+                    option(value : "5500", "Maximum size")
+                }
+                input (type : "submit", value : "Get image")
+            }
+
+
+            h2("GetCaption")
+            p("Supply a URN or an ID in the default namespace, and get back text for a caption.")
+            p("""This says nothing about underlying implementatoin:
+it might simply be a property of a Collection object, or it might be
+algorithmically generated.""")
+            h3("Retrieve by URN")
+            form (action : "Img", method : "get") {
+                input (type : "hidden", name : "request", value : "GetCaption")
+                input (type : "text", name : "urn", value : demoUrn)
+                input (type : "submit", value : "Get caption for image")
+            }
+
+
+            h3("Retrieve by ID in default namespace")
+            form (action : "Img", method : "get") {
+                input (type : "hidden", name : "request", value : "GetCaption")
+                input (type : "text", name : "id", value : demoId)
+                input (type : "submit", value : "Get caption for image")
+            }
+
+
+            h2("GetRights")
+            p("Supply a URN or an ID in the default namespace, and get back text with a statement of rights.")
+            p("""This says nothing about underlying implementatoin:
+it might simply be a property of a Collection object, or it might be
+algorithmically generated.""")
+            h3("Retrieve by URN")
+            form (action : "Img", method : "get") {
+                input (type : "hidden", name : "request", value : "GetRights")
+                input (type : "text", name : "urn", value : demoUrn)
+                input (type : "submit", value : "Get rights info")
+            }
+
+
+
+            h3("Retrieve by ID in default namespace")
+            form (action : "Img", method : "get") {
+                input (type : "hidden", name : "request", value : "GetRights")
+                input (type : "text", name : "id", value : demoId)
+                input (type : "submit", value : "Get rights info")
+            }
+
+            h2("GetIIPMooViewer")
+            p("Supply a URN or an ID in the default namespace, and get back information needed to create a web page with zoomable image using IIPMooViewer")
+            p("An xslt stylesheet can build a zoomable interface from this information;  if an RoI is included, it can be highlighted on the zoomable image with the zoomomatic.xsl stylesheet.")
+            p("Optional parameters:")
+            ul {
+                li ("""xslt : the URL of an XSLT stylesheet to apply to 
+the output: note that this may be either a relative URL to use a stylesheet
+supplied by the service, or a remote URL to a stylesheet of your choosing.
+If the value of xslt is 'none', then raw XML of the reply will be returned
+without an associated XSLT stylesheet.  If the xslt parameter is NOT included,
+then this service will associate a default stylesheet creating an HTML page
+with zoomable image.
+""")
+            }
+
+            def zoomXsl = "zoomomatic.xsl"
+            h3("Retrieve zooming information by URN")
+            form (action : "Img", method : "get") {
+                input (type : "hidden", name : "request", value : "GetIIPMooViewer")
+                input (type : "text", name : "urn", value : demoUrn)
+                input (type : "hidden", name : "xsl", value : zoomXsl)
+                input (type : "submit", value : "Get zoomable image info")
+            }
+
+            h3("Retrieve zooming information by ID in default namespace")
+            form (action : "Img", method : "get") {
+                input (type : "hidden", name : "request", value : "GetIIPMooViewer")
+                input (type : "text", name : "id", value : demoId)
+                input (type : "hidden", name : "xsl", value : zoomXsl)
+                input (type : "submit", value : "Get zoomable image info")
+            }
+
+
+
+
+
+        } // div class content
+    } 
+}
+
+
+
+
+

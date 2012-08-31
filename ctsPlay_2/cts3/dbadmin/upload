@@ -1,0 +1,125 @@
+/* Groovy page for loading file from uploads directory into JPA data store.
+*/
+
+import javax.persistence.*
+import edu.harvard.chs.cts3.CtsUrn
+import edu.harvard.chs.ctsjpa.*
+import groovy.xml.MarkupBuilder
+
+import com.google.appengine.api.datastore.Text
+
+import com.google.appengine.api.users.User
+import com.google.appengine.api.users.UserService
+import com.google.appengine.api.users.UserServiceFactory
+import cite.AuthChecker
+
+
+boolean debug = false
+
+
+def installType = "APPENGINE"
+
+def passFile = request.getRealPath('configs') + "/pass.xml"
+AuthChecker auth = new AuthChecker(passFile)
+boolean ok = auth.authOk(session?.user)
+
+if (!ok) {
+    if (installType == "RDBMS") {
+        response.sendRedirect("login")
+
+    } else if (installType == "APPENGINE") {
+        UserService userService = UserServiceFactory.getUserService()
+        response.sendRedirect(userService.createLoginURL(request.getRequestURI()))
+    } else {
+        html.html {
+            head{title("Unrecognized installation type") } 
+            body {p("Unknown install type ${installType}")}
+        }
+    }
+	
+
+
+} else {
+    // OK to upload!
+    html.html {
+        head {
+            title ("Upload CTS data: ${installType}")
+            link(type: "text/css", rel : "stylesheet",  href : "../admin.css", title: "admin style sheet")
+        }
+
+        body {
+            if (installType == "RDBMS") {	
+                p(class:"login") {
+                    a (href : "logout", "Logout")
+                }
+            }
+
+            p {
+                a(href : "../home", "CTS home")
+            }
+            p {
+                a(href : "admin", "Admin page")
+            }
+
+            h1("Upload data")
+            def f = request.getParameter("file")
+            def url = request.getParameter("url")
+
+            if  ((url) && (url != "")) {
+                p ("Loading data from url ${url} ...")
+
+                JpaCtsRepository jparepo = new JpaCtsRepository()
+                def startSize = jparepo.repoSize()
+                if (installType == "APPENGINE") {
+                    p("Appengine load:  use single commit")
+                    def records = new URL(url).getText("UTF-8")
+                    p("Loading new content from string of size " + records.size())
+                    jparepo.loadUrl(records, true)
+                    p("New content added.")
+
+
+                } else {
+                    p("RDBMS load:  use mutliple commit")
+                    jparepo.loadUrl(new URL(url))
+                
+                }
+                def endSize = jparepo.repoSize()
+                def total = endSize - startSize
+                p ("Loaded ${total} new nodes." )
+
+
+            } else if ((f) && (f != "")) {
+                p ("Loading data from local file ${f} ...")
+                if (installType == "APPENGINE") {
+                    JpaCtsRepository jparepo = new JpaCtsRepository()
+
+                    p("AppEngine:  use single commit.")
+                    def records = new File(f).getText("UTF-8")
+                    p("Loading new content from string of size " + records.size())
+		    jparepo.loadString(records, true)
+                     
+		    p {
+                        strong ("Complete.")
+                        mkp.yld(" Successfully uploaded all data into repository.")
+                    }
+
+                } else {
+                    JpaCtsRepository jparepo = new JpaCtsRepository()
+                    def startSize = jparepo.repoSize()
+                    jparepo.loadFile(new File(f))
+                    def endSize = jparepo.repoSize()
+                    def total = endSize - startSize
+                    p {
+                        strong ("Complete.")
+                        mkp.yld ("Successfully uploaded ${total} new nodes into repository." )
+                    }
+                }
+
+
+            } else {
+                p ("Need a url or file parameter.")
+            }
+        }
+    }
+}
+

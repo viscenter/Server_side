@@ -1,0 +1,139 @@
+
+
+/*
+   -------------------------------
+  First, remove all default formatting
+  ----------------------------------
+ */
+/* Normalizes margin, padding */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, th, td {
+    margin : 0;
+    padding : 0;
+     
+}
+/* Normalizes font-size for headers */
+h1,h2,h3,h4,h5,h6 {
+    font-size : 100%;
+     
+}
+/* Removes list-style from lists */
+ol, ul {
+    list-style : none;
+     
+}
+/* Normalizes font-style and font-weight to normal */
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style : normal;
+    font-weight : normal;
+     
+}
+/* Removes list-style from lists */
+table {
+    border-collapse : collapse;
+    border-spacing : 0;
+     
+}
+/* Removes border from fieldset and img */
+fieldset,img {
+    border : 0;
+     
+}
+/* Left-aligns text in caption and th */
+caption,th {
+    text-align : left;
+     
+}
+/* Removes quotation marks from q */
+q:before, q:after {
+    content :'';
+     
+}
+/*
+   -------------------------------
+  First, remove all default formatting
+  ----------------------------------
+ */
+html {
+    background: #ABAEA0;
+    font-size: 14px;
+    line-height: 1.5em;
+    font-family: verdana, arial, helvetica;
+}
+body {
+    margin-left: 15px;
+    margin-right: 15px;
+    border: 2px solid #898c87;
+    width: 85%;
+    background: #F9F8E7 url(cts-banner.png) repeat-x;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 60px;
+}
+h1 {
+    color: maroon;
+    font-size: 150%;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+h2 {
+    color: maroon;
+    font-size: 100%;
+    margin-bottom: 0.5em;
+}
+h3 {
+    color: maroon;
+    font-size: 100%;
+    margin-bottom: 0.5em;
+}
+
+a {
+    text-decoration: none;
+    color: navy;
+}
+
+a:hover {
+    background: #ABAEA0;
+}
+
+.credits {
+    font-size: 85%;
+    color: #898c87;
+    margin: 20px 0px 0px 0px;
+}
+
+.lastmod {
+    font-size: 85%;
+    color: #898c87;
+    margin: 20px 0px 0px 0px;
+}
+
+.crumbs {
+    font-size: 85%;
+}
+
+
+p {
+	margin-bottom: 0.5em;
+    	margin-top: 0.5em;
+}
+
+li {
+	margin-bottom: 0.5em;
+}
+
+ul	{
+	margin-bottom: 1em;
+	margin-top: 1em;
+	margin-left: 3em;
+	list-style-type: circle;
+}
+
+ol	{
+	margin-bottom: 1em;
+	margin-top: 1em;
+	margin-left: 3em;
+	list-style-type: decimal;
+}

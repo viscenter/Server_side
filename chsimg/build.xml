@@ -1,0 +1,72 @@
+<project name="chsimg" default="usage">
+
+  <import file="common.xml"/>
+
+  <target name="usage"
+	  description="Lists suggested targets.">
+    <echo message="  Main ant targets:  "/>
+    <echo message="chsimg    Builds the CHS Image Extension in a jetty container"/>
+    <echo message="          (in build/jetty)"/>
+    <echo message="run-img   Builds servlet if necessary, and runs the jetty container "/>
+    <echo message="war       Builds servlet if necessary, and packages as war file."/>
+
+  </target>
+
+  <target name="war"
+	  description="Builds war file for inclusion in any servlet container"
+	  depends="chsimg"
+	  >
+    <jar jarfile="${builddir}/chsimg.war">
+      <fileset dir="${builddir}/jetty/webapps">
+	<include name="chsimg/**"/>
+      </fileset>
+    </jar>
+  </target>
+  
+
+  <target name="chsimg"  
+	  description="Builds CHS Image Extension in included jetty container">
+    <!-- Copy main servlet structure -->
+    <copy todir="${builddir}">
+      <fileset dir="groovlet" includes="chsimg/**" />
+    </copy>
+    <copy todir="${builddir}/chsimg/WEB-INF/lib"
+	  file="lib/groovy-all-1.6.2.jar"/>
+    
+    <copy todir="${builddir}/chsimg/WEB-INF/lib"
+	  file="lib/postgresql.jar"/>
+
+    <copy todir="${builddir}/chsimg/WEB-INF/lib"
+	  file="lib/cite.jar"/>
+
+    <copy  todir="${builddir}/jetty">
+      <fileset dir="jetty"/>
+    </copy>
+
+    <delete file="${builddir}/jetty/contexts/cite.xml"/>
+    
+    <copy todir="${builddir}/jetty/webapps/chsimg">
+      <fileset dir="${builddir}/chsimg"/>
+    </copy>
+    
+  </target>
+
+  <target name="run-img" 
+	  depends="chsimg"
+	  description="Run jetty container with CHS Image service">
+    <echo message="Starting CHS Image service on http://localhost:${SERVLETPORT}"/>
+    <java dir="${builddir}/jetty" fork="true" jar="${builddir}/jetty/start.jar">
+      <env key="jetty.port" value="${SERVLETPORT}"/>
+      <sysproperty key="jetty.port" value="${SERVLETPORT}"/>
+    </java>
+  </target>
+
+
+
+
+
+
+
+
+
+</project>

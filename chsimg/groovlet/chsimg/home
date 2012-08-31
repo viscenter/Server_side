@@ -1,0 +1,39 @@
+html.html {
+    head {
+        title("CITE Collection extension: CHS Image Service")
+        link(type: "text/css", rel : "stylesheet",  
+             href : "cts.css", title: "CTS style sheet")
+    }
+
+    body {
+
+        div (class : "menu") {
+            p { 
+                mkp.yld("CHS Image extension")
+            }
+        }
+
+        div (class : "cts-content"){
+            h1 ("CITE Collection extension: CHS Image Services")
+            p ("""This servlet implements the
+CHS Image service, allowing you to use binary image data
+for images canonically cited as CITE Collection objects.
+""")
+p {
+mkp.yld("""The CHS Image service is designed for automated use by other software
+following the CHS Image service API, but if you want to
+see how the syntax of the requests work, you can use the forms on 
+""")
+a (href : "requests", "this page")
+mkplyld(""" to submit reqeusts manually.""")
+
+}
+
+        }
+    }
+}
+
+
+
+
+

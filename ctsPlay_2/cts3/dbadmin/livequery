@@ -1,0 +1,81 @@
+import javax.persistence.*
+import edu.harvard.chs.cts3.*
+
+import edu.harvard.chs.ctsjpa.*
+
+import groovy.xml.MarkupBuilder
+
+def installType = "APPENGINE"
+
+def queryStr = request.getParameter("query")
+def queryBase =                 "Select from edu.harvard.chs.ctsjpa.CtsNode"
+
+
+html.html {
+    head {
+        title ("Live query ")
+        link(type: "text/css", rel : "stylesheet",  href : "../admin.css", title: "admin style sheet")
+    }
+
+    body {
+        if (installType == "RDBMS") {
+            p(class:"login") {
+                a (href : "logout", "Logout")
+            }
+        }
+
+        p {
+            a(href : "../home", "CTS home")
+        }
+        p {
+            a(href : "admin", "Service administration")
+        }
+
+
+        if ((queryStr != null) && (queryStr != "")) {            
+            h1("Results for query")
+            p() {
+                mkp.yield "Query: "
+               code ("${queryStr}")
+            }
+
+            def em = EMF.get().createEntityManager()
+            Query query = em.createQuery("${queryBase} ${queryStr}")
+            def resultNodes = query.getResultList()
+            def resultCount = resultNodes.size()
+
+
+            p () {
+                mkp.yield "Number of objects in results: " 
+                code { strong("${resultCount}")}
+            }
+
+            ul {
+                resultNodes.each { n ->
+                    li {
+                        mkp.yield "${n} has ref3 |${n.ref3}|"
+                    }
+                }
+            }
+
+            em.close()
+            hr ()
+            p ("Enter new GQL query:")
+
+        } else {
+            h1("Query for CtsNode objects")
+        }
+
+        form (action : "livequery"){
+            p("Complete the query with a GQL 'WHERE' clause")
+            p {
+                code {
+                    b("${queryBase}")
+                }
+            }
+            textarea(name:'query',id:'query', "WHERE")
+            input (type : 'submit', value : 'Submit query', rows : '40', col: '20')
+        }
+        
+    }
+}

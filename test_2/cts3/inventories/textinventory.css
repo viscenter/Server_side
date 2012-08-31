@@ -1,0 +1,331 @@
+/*
+  A CSS stylesheet for 'tagless editing' of CTS TextInventories using oXygen/Author.
+ */
+@namespace ti url('http://chs.harvard.edu/xmlns/cts3/ti');
+TextInventory:before {
+    content : "Text Inventory [version:" attr(tiversion) "] ";
+    font-weight : bold;
+    font-size : 130%;
+    display : block;
+    color : maroon;
+}
+TextInventory {
+    background-color: #F9F8E7;
+}
+ctsnamespace:before {
+    content : "CTS Namespace [abbr: " attr(abbr) ", ns: " attr(ns) "] ";
+    color :maroon;
+    background-color :inherit;
+    font-weight : bold;
+    font-size : 100%;
+    display : block;
+}
+ctsnamespace {
+    display : block;
+    margin-top : 0.5em;
+    margin-bottom : 1em;
+    border : solid #999999 1px;
+    padding : 0.2em;
+}
+/* DUBLIN CORE DATA FOR A CTS COLLECTION */
+collection:before {
+    content : "Collection ";
+    color : #999999;
+    background-color:inherit;
+    font-weight : bold;
+    font-size : 100%;
+    display : block;
+}
+collection {
+    display : block;
+    margin-bottom : 1em;
+    border : solid #999999 1px;
+    padding : 0.2em;
+}
+collection title:before {
+    content : "DC title [xml:lang: " attr(lang) "] ";
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+}
+collection title {
+    display :block;
+}
+collection label {
+    display :block;
+}
+collection creator:before {
+    content : "DC creator ";
+    color : #999999;
+    background-color : inherit;
+    font-weight : bold;
+}
+creator {
+    display : block;
+}
+collection coverage:before {
+    content : "DC coverage [xml:lang: " attr(lang) "] ";
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+}
+coverage {
+    display : block;
+}
+collection rights:before {
+    content : "DC rights [xml:lang: " attr(lang) "] ";
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+}
+rights {
+    display : block;
+}
+collection description:before {
+    content : "DC description [xml:lang: " attr(lang) "] ";
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+}
+collection description {
+    display : block;
+}
+/* CITATION SCHEME DECLARATION */
+citationSchemes:before {
+    content : "Citation schemes ";
+    color : #999999;
+    background-color : inherit;
+    font-weight : bold;
+      display : block;
+}
+citationSchemes {
+    display : block;
+    margin-bottom : 1em;
+    display : block;
+    border : solid #999999 1px;
+    padding : 0.2em;
+}
+scheme:before {
+    content : "Scheme [id: " attr(projid) ", type: " attr(type) "] ";
+    color : maroon;
+    font-weight : bold;
+    background-color:inherit;
+}
+scheme {
+    display : block;
+}
+scheme description:before {
+   
+    content : "DC description [xml:lang: " attr(lang) "] ";
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+}
+
+
+
+scheme label:before {
+    display :inline;
+    content : "Scheme label: ";
+    font-weight : bold;
+    color : #999999;
+    background-color : inherit;
+}
+scheme label {
+    display :block;
+    margin-left: 0.5em;
+}
+/* INVENTORY CONTENTS, BEGINNING WITH TEXTGROUPS */
+textgroup:before {
+    content : "Text group [id: " attr(projid) "] ";
+    color : maroon;
+    font-weight : bold;
+    background-color:inherit;
+}
+textgroup {
+    display :block;
+    margin-bottom : 1em;
+    border : solid #999999 1px;
+    padding : 0.2em;
+}
+groupname:before {
+    display :inline;
+    content : "Name: ";
+    font-weight : bold;
+    color : #999999;
+    background-color : inherit;
+}
+groupname {
+    display :block;
+    margin-left: 0.5em;
+}
+work:before {
+    content : "\2022" "  Work [" attr(projid) "; lang: " attr(lang) "] ";
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+}
+work {
+    display : block;
+    margin-left : 1.0em;
+    margin-top : 1.0em;
+/* border-left : dashed #999999 1px; */
+    padding-top : 0.5em;
+}
+edition:before {
+    content : "Edition [" attr(projid) "] ";
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+}
+edition {
+    display :block;
+    margin-left : 1.5em;
+    padding-left : 0.2em;
+    margin-top : 0.5em;
+    padding-top : 0.5em;
+    border-top : dotted #999999 1px;
+}
+translation:before {
+    content : "Translation [" attr(projid) "; lang: " attr(lang) "] ";
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+}
+translation {
+    display :block;
+    margin-left : 1.5em;
+    padding-left : 0.2em;
+    margin-top : 0.5em;
+    padding-top : 0.5em;
+    border-top : dotted #999999 1px;
+}
+citationScheme {
+    display : block;
+    margin-left : 1.5em;
+    content : "Named citation schemes [" attr(schemaId) "] ";
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+}
+label:before {
+    content : "Label  ";
+    font-weight : bold;
+    font-style :normal;
+    color : #999999;
+    background-color:inherit;
+}
+edition label {
+    display : block;
+    margin-left : 2.0em;
+}
+/* Documenting on-line versions */
+namespaceMapping {
+    display : block;
+    content : "XML Namespace:  abbreviation " attr(abbreviation) " [ = " attr(nsURI) "]";
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+}
+validate {
+    display : block;
+    content : "Validate against  " attr(schema);
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+}
+citationMapping {
+    display : block;
+    content : "Mapping of citation schemes";
+    color : #999999;
+    background-color : inherit;
+    font-weight : bold;
+}
+citationMapping citation:before {
+    display :block;
+    content : "Citation scheme:  level 1";
+    font-weight : bold;
+    font-style :normal;
+    color : #999999;
+    background-color : inherit;
+}
+citationMapping citation citation:before {
+    display :block;
+    content : "Level 2";
+    font-weight : bold;
+    font-style :normal;
+    color : #999999;
+    background-color : inherit;
+    margin-left : 0.5em;
+}
+citationMapping citation citation citation:before {
+    display :block;
+    content : "Level 3";
+    font-weight : bold;
+    font-style :normal;
+    color : #999999;
+    background-color : inherit;
+    margin-left : 1.0em;
+}
+citationMapping citation citation citation citation:before {
+    display :block;
+    content : "Level 4";
+    font-weight : bold;
+    font-style :normal;
+    color : #999999;
+    background-color : inherit;
+    margin-left : 1.5em;
+}
+citationMapping citation {
+/* label, scope, xpath */
+    content : "Label: " attr(label) "; scope: " attr(scope) "; XPath template: " attr(xpath);
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+}
+citationMapping citation citation {
+/* label, scope, xpath */
+    content : "Label: " attr(label) "; scope: " attr(scope) "; XPath template: " attr(xpath);
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+    margin-left : 0.5em;
+}
+citationMapping citation citation citation {
+/* label, scope, xpath */
+    content : "Label: " attr(label) "; scope: " attr(scope) "; XPath template: " attr(xpath);
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+    margin-left : 1.0em;
+}
+citationMapping citation citation citation citation {
+/* label, scope, xpath */
+    content : "Label: " attr(label) "; scope: " attr(scope) "; XPath template: " attr(xpath);
+    color : maroon;
+    background-color : inherit;
+    font-weight : bold;
+    margin-left : 1.5em;
+}
+/* Need to namespace these: */
+ti|title:before {
+    content : "Work title  ";
+    font-weight : bold;
+    font-style :normal;
+    color : #999999;
+}
+ti|title {
+    display :block;
+    font-style :italic;
+    margin-left : 1.5em;
+}
+ti|description:before {
+    content : "Description  ";
+    font-weight : bold;
+    font-style :normal;
+    color : #999999;
+}
+edition ti|description {
+    display : block;
+    margin-left : 2.0em;
+}

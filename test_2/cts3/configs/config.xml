@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="citeconfig.rng" type="xml"?>
+
+<citeconfig>
+<!--
+    Also valid to use a @url attribute, e.g.:
+    <inventory url="http://127.0.0.1/cts3ti.xml"/>    
+-->
+    <inventory file="inventory.xml"/>    
+
+    <jdbcConfig dburl="jdbc:postgresql://localhost/ctsdb" 
+        driver="org.postgresql.Driver" 
+        user="cts" 
+        password=""/>
+</citeconfig>

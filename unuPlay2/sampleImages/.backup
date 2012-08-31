@@ -1,0 +1,8 @@
+NRRD0001
+content: wast
+type: unsigned char
+dimension: 3
+sizes: 256 256 178
+spacings: 1 1 1
+data file: Chad010_001.pnm
+encoding: raw

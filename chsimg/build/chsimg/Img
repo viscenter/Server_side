@@ -1,0 +1,209 @@
+/**
+*  An SQL implementation of CHS Image Extensions.
+*/
+
+import groovy.sql.Sql
+import edu.harvard.chs.cite.*
+
+
+def debug = true
+
+/*
+* Closure adding the spec's syntax for error messages
+* to a message and code combination.
+*/
+def errorReply = {msg,code ->
+    println """<chsimg:CHSImgError  
+    xmlns:chsimg="http://chs.harvard.edu/xmlns/img" 
+    xmlns="http://chs.harvard.edu/xmlns/img"> 
+    <message>${msg}</message>
+    <code>${code}</code>
+    </chsimg:CHSImgError> """
+}
+
+
+def openXml = { xslt ->
+    response.setContentType("text/xml")
+    if ((xslt) &&  (xslt != "default.xsl")) {
+        println  """<?xml-stylesheet type="text/xsl" href="${xslt}"?>"""
+    }
+}
+
+// Gather settings:
+def confDir = context.getRealPath("/configs")
+def confFileName = "citeconfig.xml"
+def confXml = new XmlSlurper().parse(new File(confDir + "/" + confFileName))
+
+// Backend sql database settings:
+def dbUrl = confXml.jdbcConfig."@dburl".toString()
+def dbUser = confXml.jdbcConfig."@user".toString()
+def dbPass = confXml.jdbcConfig."@password".toString()
+def dbDriver = confXml.jdbcConfig."@driver".toString()
+
+// Settings for image extension:
+def urlBase = confXml.iipimage."@url".toString()
+def defaultNS = confXml.defaults."@ns".toString()
+def defaultCollection = confXml.defaults."@collection".toString()
+def defaultWidth = 800
+try {
+    def widthStr = confXml.defaults."@width".text()
+//    System.err.println "widthSTr ${widthStr} is " + widthStr.getClass()
+    defaultWidth = Integer.parseInt(widthStr)
+} catch (NumberFormatException nfe) {
+    // just use hard-coded default
+}
+
+// Two parameters required for all requests:
+// the request name and the identifier for the image
+// (a CITE URN, or an ID value in default collection)
+def reqName = request.getParameter("request")
+
+
+
+// imgId is supplied  EITHER by an id parameter
+// OR by a urn parameter.  
+def imgId
+def subRef = ""
+String imgUrn = "urn:cite:${defaultNS}:${defaultCollection}."
+String queryUrn = "urn:cite:${defaultNS}:${defaultCollection}."
+
+if (request.getParameter("urn")) {
+    imgUrn = request.getParameter("urn")
+    if (debug) {System.err.println "URN SUBMITTED:  " + imgUrn}
+    CiteUrn urn = new CiteUrn(imgUrn)
+    imgId = urn.getObjectId()
+    subRef = urn.getExtendedRef()
+    queryUrn = "urn:cite:${urn.getNs()}:${urn.getCollection()}.${urn.getObjectId()}".toString()
+
+} else if (request.getParameter("id")) {
+    def fullImgId = request.getParameter("id")
+    def idParts = fullImgId.split(/:/)
+    imgId = idParts[0]
+    if (idParts.size() == 2) {
+        subRef = idParts[1]
+    }
+    imgUrn += fullImgId.toString()
+    queryUrn += imgId.toString()
+}
+
+
+
+def withXslt = request.getParameter("xslt")
+def w 
+w = request.getParameter("w")
+if (!w) {
+    w = defaultWidth
+}
+//def h = request.getParameter("h")
+
+
+if (!withXslt) {
+    withXslt = "default.xsl"	
+}
+
+if (withXslt == 'none') {
+    withXslt = null
+}
+
+if ((!reqName) || (!imgId)) {
+    response.setContentType("text/xml")
+    errorReply( "INVALID REQUEST. Must have 'request' parameter and one of 'urn' or 'id' parameters.", "1")
+
+} else{
+    if (debug) {System.err.println "WORK WITH ID ${imgId} and SUBREF #${subRef}#"}
+
+
+    Sql sql = Sql.newInstance(dbUrl,dbUser,dbPass,dbDriver)
+    def imgRecord = sql.firstRow("select * from img where img_id = ?", [queryUrn])
+    
+    if (!imgRecord) {
+        if (debug) {System.err.println "FAILED FOR URn " + queryUrn}
+        errorReply("NO RECORD FOR IMG ${imgId}","-1")
+    } else {    
+
+    switch (reqName) {
+
+        case "GetCaption":
+            openXml(withXslt)
+        println """
+<GetCaption xmlns='http://chs.harvard.edu/xmlns/img'>
+<caption>
+${imgRecord.getProperty("caption")}
+</caption>
+</GetCaption>"""
+        break
+
+        case "GetRights":
+            openXml(withXslt)
+        // This might normally make a call to the Collection
+        // to retrieve or construct an appropriate caption, but
+        // for this data set, we just repeat a standard statement.
+        println """
+<GetRights xmlns='http://chs.harvard.edu/xmlns/img'>
+<rights>
+ ${imgRecord.getProperty("rights")}
+</rights>
+</GetRights>
+"""
+        break
+
+	    
+        case "GetBinaryImage":
+                def groupRecord = sql.firstRow("select * from img_group g, img i where g.id = i.group_id and i.img_id = ?", [queryUrn])
+                def imgDir = groupRecord.getProperty('img_dir')
+                if (subRef == "") {
+                    if (debug) {System.err.println "NO SUBREF"}
+                    def solution = "${urlBase}?OBJ=IIP,1.0&FIF=${imgDir}/${imgId}.tif&WID=${w}&CVT=JPEG"
+                    response.sendRedirect(solution.toString())
+
+                } else {
+                    if (debug) {System.err.println "USIE SUBREF ${subRef}"}
+                    def solution = "${urlBase}?OBJ=IIP,1.0&FIF=${imgDir}/${imgId}.tif&RGN=${subRef}&WID=${w}&CVT=JPEG"
+                    response.sendRedirect(solution.toString())
+                }
+
+                
+                case "GetIIPMooViewer":
+                    def groupRecord = sql.firstRow("select * from img_group g, img i where g.id = i.group_id and i.img_id = ?", [queryUrn])
+                    def imgDir = groupRecord.getProperty('img_dir')
+
+
+                    if (withXslt) {
+                        openXml("zoomomatic.xsl")
+                        //openXml(withXslt)
+                    } else {
+                        //errorReply("NO XSLT","-99")
+                        openXml(null)
+                    }
+                    println """
+<GetIIPMooViewer  xmlns='http://chs.harvard.edu/xmlns/img'>
+<request>
+<urn>${imgUrn}</urn>
+<id>${imgId}</id>
+<roi>${subRef}</roi>
+</request>
+<result>
+<serverUrl val="${urlBase}"/>
+<imgPath val="${imgDir}/${imgId}.tif"/>
+<roi val="${subRef}"/>
+<label>${imgRecord.getProperty('img_id')} : ${imgRecord.getProperty('rights')}</label>
+</result>
+</GetIIPMooViewer>
+"""
+
+            break
+
+
+        default:
+	    def msg = ""
+	    if (reqName) {
+                response.setContentType("text/xml")
+		errorReply( "INVALID REQUEST. Request name not recognized: ${reqName}", "1")
+	    }
+
+	    break
+	} //switch
+	sql.close()
+}
+}
+

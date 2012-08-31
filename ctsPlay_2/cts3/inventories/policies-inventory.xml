@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextInventory  tiversion="3.0.rc1" xmlns="http://chs.harvard.edu/xmlns/cts3/ti"
+	xmlns:dc="http://purl.org/dc/elements/1.1" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<collection id="pkipolicies" isdefault="yes">
+		<title xml:lang="eng" xmlns="http://purl.org/dc/elements/1.1">Public Key Infrastructure
+			Policies</title>
+		<creator xmlns="http://purl.org/dc/elements/1.1">Gabe Weaver</creator>
+		<coverage xml:lang="eng" xmlns="http://purl.org/dc/elements/1.1">Extract from one PKI
+			Policy.</coverage>
+		<description xml:lang="eng" xmlns="http://purl.org/dc/elements/1.1"> A set of PKI Policies
+			selected to illustrate how PKI Policies can be managed with a CTS. </description>
+		<rights xml:lang="eng" xmlns="http://purl.org/dc/elements/1.1"> This TextInventory and all
+			on-line texts it documents are licensed under the Creative Commons Attribution-Share
+			Alike 3.0 Unported License. For more information, see:
+			http://creativecommons.org/licenses/by-sa/3.0/ </rights>
+	</collection>
+	<!-- PKI Policies -->
+	<textgroup projid="pki:pkipolicy">
+		<groupname xml:lang="eng">PKI Policy Groups</groupname>
+		<work projid="pki:ulagrid" xml:lang="eng">
+			<title xml:lang="eng"> Universidad de Los Andes GRID Certificate Authority Certificate
+				Policy and Certificate Practices Statement </title>
+			<edition projid="pki:gweave01">
+				<label xml:lang="eng">Weaver</label>
+				<description xml:lang="eng"> A Public Key Infrastructure (PKI) Certificate Policy
+					(CP) and Certification Practice Statement (CPS) for the Universidad de Los Andes
+					GRID Certification Authority (ULAGRID). This CP is formatted according to
+					Request for Comment (RFC) 3647. A CP is a security policy determining the
+					expectations for trust surrounding the creation, use, and revocation of a PKI
+					certificate. </description>
+				<online docname="pkipolicy.ulagrid.xml">
+					<validate schema="rfc3647schema.rng"/>
+					<namespaceMapping abbreviation="tei" nsURI="http://www.tei-c.org/ns/1.0"/>
+					<citationMapping>
+						<!-- Top-level content:  all marked child nodes of sections -->
+						<citation label="section" scope="/tei:TEI/tei:text/tei:body"
+							xpath="/tei:div[@type='section' and @n='?']"
+							>
+							<citation label="subsection"
+								scope="/tei:TEI/tei:text/tei:body/tei:div[@type='section' and @n='?']"
+								xpath="/tei:div[@type='subsection' and @n='?']"
+								leafxpath="/node()[@ana='section' and @n='?']">
+							
+							
+								<citation label="subsubsection"
+									scope="/tei:TEI/tei:text/tei:body/tei:div[@type='section' and @n='?']/tei:div[@type='subsection' and @n='?']"
+									xpath="/tei:div[@type='subsubsection' and @n='?']"
+									leafxpath="/node()[@ana='subsection' and @n='?']">
+								</citation>
+							</citation>
+						</citation>
+					</citationMapping>
+				</online>
+			</edition>
+		</work>
+	</textgroup>
+</TextInventory>

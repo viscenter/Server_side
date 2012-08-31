@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI
+    xmlns="http://www.tei-c.org/ns/1.0"
+    xmlns:tei="http://www.tei-c.org/ns/1.0">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title
+                    xml:lang="eng">The Quran</title>
+            </titleStmt>
+            <publicationStmt>
+                <p>
+                    TEI-Lite P5 text of the first sura of the Quran.
+                </p>
+            </publicationStmt>
+            <sourceDesc>
+                <p>English translation by M.H. Shakir from the Perseus Project,
+                    http://www.perseus.tufts.edu/hopper/text?doc=Perseus%3Atext%3A2002.02.0003%3Asura%3D1
+                    </p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text
+        xml:lang="en">
+        <body>
+            <div
+                type="sura"
+                n="1">
+                <l
+                    n="1">In the name of Allah, the Beneficent, the Merciful.</l>
+                <l
+                    n="2">All praise is due to Allah, the Lord of the Worlds.</l>
+                <l
+                    n="3">The Beneficent, the Merciful.</l>
+                <l
+                    n="4">Master of the Day of Judgment.</l>
+                <l
+                    n="5">Thee do we serve and Thee do we beseech for help.</l>
+                <l
+                    n="6">Keep us on the right path.</l>
+                <l
+                    n="7">The path of those upon whom Thou hast bestowed favors. Not (the path) of
+                    those upon whom Thy wrath is brought down, nor of those who go astray.</l>
+            </div>
+        </body>
+    </text>
+</TEI>
